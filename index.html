@@ -1,0 +1,1857 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Residencial Torres de San Telmo</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+        font-family: Arial, sans-serif;
+        background: url('https://objectstorage.sa-saopaulo-1.oraclecloud.com/n/grq6lwb4htd1/b/tecimob-production/o/media/8d374509-ba34-4082-b80c-2201bc5ede5b/properties/04c123ee-65f8-43d9-91ac-bdf2fb25337d/images/1533db39-e224-4195-a4ae-3b809c676e551760993886aa1j.jpg') 
+                    no-repeat center -390px / cover;
+        background-attachment: fixed;
+        color: #333;
+        }
+		header {
+		  position: relative;
+		  min-height: 100px; /* Alterado para se ajustar ao conteúdo */
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+		  /*background: url('https://objectstorage.sa-saopaulo-1.oraclecloud.com/n/grq6lwb4htd1/b/tecimob-production/o/media/8d374509-ba34-4082-b80c-2201bc5ede5b/properties/04c123ee-65f8-43d9-91ac-bdf2fb25337d/images/1533db39-e224-4195-a4ae-3b809c676e551760993886aa1j.jpg') no-repeat center calc(100% - 60%) / cover;*/
+		}
+
+
+		
+		nav {
+			/* position: absolute; */
+			/* bottom: 20px; */
+			/* left: 50%; */
+			/* transform: translateX(-50%); */
+			background: rgba(255, 255, 255, 0.8);
+			border-radius: 8px;
+			margin: 20px; /* Margem ajustada */
+			vertical-align: bottom;
+		}
+     
+      nav ul { list-style: none; display: flex; align-items: center; flex-wrap: wrap; justify-content: center;}
+      nav li { margin: 0 15px; }
+      nav a {
+        background: hsla(197, 84%, 32%, 0.15);
+        display: block;
+        padding: 10px 10px;
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+		text-align: center;
+		height: 100%;
+        margin: 1px;
+        border-radius: 11px; 
+        width: 213px;
+/*         height: 50px;
+        align-items: center; */
+      }
+      nav a:hover, nav a.active { background: hsl(197, 84%, 32%); color: #fff; }
+      main { padding: 40px; background: rgba(255,255,255,0.9); min-height: calc(87vh - 100px); }
+      section { display: none; }
+      section.active { display: block; }
+      footer {
+        background: #222;
+        color: #ddd;
+        padding: 10px;
+        text-align: center;
+        font-size: 14px;
+      }
+      footer a { color: #4da6ff; text-decoration: none; }
+      .fotos img { max-width: 200px; margin: 10px; border-radius: 4px; }
+      form input, form textarea { /*width: 100%;*/ padding: 8px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; }
+      form input::placeholder { color:hsla(197, 84%, 32%, 0.15);text-align:center; font-weight:bold;}
+      button { padding: 8px 10px; border: none; background: #0077cc; color: #fff; border-radius: 4px; cursor: pointer; }
+	  
+
+        
+        #apresentacao {
+        width: 95%;
+        margin: 20px auto;
+        padding: 25px 30px;
+        background: #f9f9f9;
+        border-radius: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        font-family: "Segoe UI", Arial, sans-serif;
+        font-size: 1.1rem;
+        line-height: 1.7;
+        color: #333;
+        text-align: justify;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        #apresentacao:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+        }
+        #apresentacao::first-line {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: #1a73e8;
+        }
+
+	  /* --- Estilos do Visualizador de Imagens (Lightbox) --- */
+      .lightbox {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.85);
+        justify-content: center;
+        align-items: center;
+		flex-direction: column;
+      }
+      .lightbox-content {
+        max-width: 90%;
+        max-height: 80%;
+		border-radius: 8px;
+      }
+	  .lightbox-close, .lightbox-prev, .lightbox-next {
+		cursor: pointer;
+		position: absolute;
+		color: white;
+		font-size: 35px;
+		font-weight: bold;
+		user-select: none;
+	  }
+      .lightbox-close {
+        top: 20px;
+        right: 35px;
+      }
+	  .lightbox-prev, .lightbox-next {
+		top: 50%;
+		transform: translateY(-50%);
+		padding: 16px;
+	  }
+	  .lightbox-prev {
+		left: 10px;
+	  }
+	  .lightbox-next {
+		right: 10px;
+	  }
+	  .fotos img { cursor: pointer; transition: transform 0.2s; }
+	  .fotos img:hover { transform: scale(1.05); }
+	  /* --- Fim dos Estilos do Lightbox --- */
+
+	  /*MENU RECOLHIVEL*/
+		.dropdown {
+		  position: relative;
+		}
+
+		.dropdown-content {
+		  line-height: 1.0;
+		  display: none;
+		  position: absolute;
+		  background-color: white;
+		  min-width: 160px;
+		  border: 1px solid #ccc;
+		  z-index: 1;
+		  top: 100%;
+		  left: 0;
+		}
+
+		.dropdown-content li {
+		  display: block;
+		}
+
+		.dropdown-content a {
+		  display: block;
+		  
+		}
+
+		.dropdown:hover .dropdown-content {
+		  display: block;
+		}
+		.morador,.vehicle,.pet, .ap {align-items: center;text-align: center; gap: 10px;background:hsla(197, 84%, 32%, 0.15);margin:10px; border-radius: 8px;padding:5px;}
+		 .morador h3,.vehicle h3,.pet h3 {display:inline-block;}
+		 
+		 
+		
+			
+		.pdf-link{ padding: 4px 10px; border: none; background: #0077cc; color: #fff; border-radius: 4px; cursor: pointer;margin: 2px;}	
+			
+
+
+      /* --- Estilo das tabelas --- */
+        .table-container{max-width:900px;margin:auto;background:white;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,.1);overflow:hidden}
+            h1{text-align:center;padding:20px;margin:0;background:#2563eb;color:white}
+            table{width:100%;overflow:hidden}
+            th,td{padding:14px 16px;text-align:left;border-spacing:0;text-align:center;}
+            th{background:hsl(197, 84%, 32%);color:white;border-radius: 4px;text-align:center;}
+            tr:nth-child(odd){background:hsla(197, 84%, 32%, 0.15)}
+            tr:nth-child(even){background:#f1f5f9}
+            tr:hover{background:#dbeafe}
+            .badge{padding:4px 10px;border-radius:999px;font-size:12px;font-weight:bold}
+            .ok{background:#dcfce7;color:#166534}
+            .pending{background:#fef9c3;color:#854d0e}
+            .fail{background:#fee2e2;color:#7f1d1d}
+      /* table {width:100%;border-collapse:collapse;background:#e6e6e6}
+       th, td{border:1px solid #aaa;padding:8px}
+       th{background:#001574;color:#fff;}
+       tr:nth-child(even){background:hwb(54 8% 0% / 0.151)}
+       tr:nth-child(odd){background:oklch(85.142% 0.0001 271.152 / 0.329)} */
+      /* --- Fim dos Estilo das tabetas --- */
+      
+
+        /* --- Estilos da Seção de Notícias --- */
+      .news {
+        background-color: #f9f9f9;
+        border-left: 4px solid #0077cc; /* Uma barra colorida à esquerda */
+        border-radius: 4px;
+        padding: 15px 20px;
+        margin-bottom: 15px; /* Espaço entre as notícias */
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      }
+
+      .news h3 {
+        margin-top: 0;
+        margin-bottom: 5px;
+        font-size: 1.1em;
+        color: #333;
+      }
+
+      .news p {
+        margin-bottom: 0;
+        color: #555;
+      }
+      /* --- Fim dos Estilos de Notícias --- */
+
+
+
+
+      /*Notificação de respostas não salvas*/
+      .rnsalvas::before {
+        font-size: 11px;
+          font-weight: bold;
+          color: red;
+          line-height:135%;
+          content: "RESPOSTAS NÃO SALVAS";
+          text-shadow: 2px 2px 4px #000000;
+          /*background-color: #FFDDDD;*/
+          animation-name: blinking;
+          animation-duration: 0.5s;
+          animation-iteration-count: infinite;
+          animation-direction: alternate;
+      } 
+      @keyframes blinking {
+        0% {opacity: 0.2;}
+        100% {opacity: 1;}
+      }
+      .original {}
+      /*Até aqui*/
+
+
+      
+
+      /*<!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Alertas e confirmação  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->*/
+
+
+        #alerta {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(255, 255, 255, 0.5);
+          /* rgb(222 221 226 / 89%); */
+          z-index: 100;
+        }
+        
+        #alerta .conteudoNotif {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          color: black;
+          background-color: white;
+          padding: 20px;
+          border-radius: 10px;
+          text-align: center; 
+          box-shadow: 10px 10px 0px 0px rgba(0,0,0,0.3);    
+          cursor: move;
+          max-width: 290px;
+        } 
+        
+        #alerta .titulo {
+          font-size: 18px;
+          font-weight: bold;
+          margin-bottom: 10px;
+        }
+        
+        #alerta .mensagem {
+          margin-bottom: 20px;
+        }
+        
+        #alerta .botoes {
+          display: flex;
+          justify-content: space-between;
+        }
+        
+        #alerta .botao {
+          padding: 10px 20px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        
+        #alerta .botao:hover {
+          background-color: #ccc;
+        }
+
+
+    </style>
+  </head>
+  <body>
+  <div id="alerta"> </div>                  <!-- notificações, document.getElementById('alerta').style.display = 'none' -->
+
+    <header>
+
+    <div style="position:absolute; top:1px; right:1px; z-index:9999; gap:16px;font-size:14px;">
+        <span id="logado" style=" display:none;">
+          <span id="verEMail">Email Logado </span>&emsp;&nbsp;
+          <!-- <div id="torre_AP" style="">torre_AP</div> -->
+          <button type="button" id="deixarSessao" onclick="sair()" style="background-color:#ff4d4d; color:white; border:none; border-radius:2px; cursor:pointer; font-weight:bold; transition:background-color 0.3s; " onmouseover="this.style.backgroundColor='#e60000'" onmouseout="this.style.backgroundColor='#ff4d4d'">SAIR</button>
+        </span>
+
+        <!-- Botão de login -->
+        <script src="https://accounts.google.com/gsi/client" ></script>
+        <span style="display:none;" id="botaoLogin" class="g_id_signin"
+                  data-type="standard"
+                  data-size="small"
+                  data-theme="outline"
+                  data-text="signin"
+                  data-shape="rectangular"
+                  data-logo_alignment="center">
+        </span>
+    </div>
+
+
+
+
+      <nav>
+        <ul>
+          <li><a href="#quem-somos" class="active">Quem somos</a></li>
+          <li><a href="#docs">Documentos úteis</a></li>
+          <li><a href="#ideias">Sugestões e Demandas</a></li>
+          <li><a href="#espacos">Espaços</a></li>
+          <li><a href="#oportunidades">Oportunidades</a></li>
+          <li><a href="#grupos">Atividades de grupo</a></li>
+          <li><a href="#noticias">Notícias</a></li>
+          <li><a href="#serviços">Serviços</a></li>
+          <li><a href="#cadastro">Novo morador/Cadastro</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+	  <section id="quem-somos" class="active">
+      <div id="inicio"></div>
+        
+        <!-- <h2>Fotos</h2>
+        <div class="fotos">
+          Alternativa a link da imagem no src: "https://lh3.googleusercontent.com/d/ID_DA_IMAGEM_DA_PASTA_DO_GOOGLE_DRIVE" 
+          <div id="galeria"></div>
+          <img class="galeria-imagem" style="height: 200px;" src="https://files.bewezy.com/thumbs/1140/752/25672d6e041bffec029c74d67df6ac9f/9r7bb1i05l0f9dz2eywyr3n5do6dis/trvAWQHuYcArjvEQrn0RZKS2Bhe0O8DO2AIZ-TQ2pC-av35qAUM8yFlUlqSPVB1zOGhsc2MmXrf-PUXp0jcY.jpeg" alt="Foto do condomínio">
+          <img class="galeria-imagem" style="height: 200px;" src="https://www.masieroimoveis.com/wp-content/uploads/2019/09/FOTO-INSER%C3%87%C3%83O-810x455.jpg" alt="Salão de festas">
+          <img class="galeria-imagem" style="height: 200px;" src="https://www.masieroimoveis.com/wp-content/uploads/2019/09/CAMPO-E-CHURRAS-SAN-TELMO.jpg" alt="Campo">
+        </div> -->
+      </section>
+
+	  <section  id="docs" >	  
+      <h2>Documentos</h2>
+      <ul style="display:inline-block;line-height: 2.0;">
+      Click no documento:
+        <span>
+          <div id="docsx"></div>
+          <!-- <a href="https://www.ime.unicamp.br/~chico/ma091verao/m091_ex1.pdf" class="pdf-link">Regimento interno</a> | 
+          <a href="https://grupos.moodle.ufsc.br/pluginfile.php/168573/mod_resource/content/1/Ex_Conj_Nuno.pdf" class="pdf-link">Convenção</a> |  
+          <a href="https://drive.google.com/file/d/1tOa6CznBgJlIUswBoouyXncLYS6wnpQt/view?usp=sharing" class="pdf-link">Padronização de ítens</a> | -->
+        </span>
+		
+		<span class="dropdown">
+		    <b style="text-decoration: none;color:black">. . . . . . . Atas de assembleias . . . . . . ▾</b>
+		    <ul class="dropdown-content" >
+          <div id="docsy"></div>
+          <!-- <li><a href="#" class="pdf-link">12/03/2024(deliberação dos .....)</a></li>
+          <li><a href="#" class="pdf-link">22/01/2023(deliberação dos .....)</a></li>
+          <li><a href="#" class="pdf-link">10/03/2022(deliberação dos .....)</a></li>
+          <li><a href="#" class="pdf-link">12/03/2024(deliberação dos .....)</a></li>
+          <li><a href="#" class="pdf-link">22/01/2023(deliberação dos .....)</a></li>
+          <li><a href="#" class="pdf-link">10/03/2022(deliberação dos .....)</a></li>
+          <li><a href="#" class="pdf-link">12/03/2024(deliberação dos .....)</a></li>
+          <li><a href="#" class="pdf-link">22/01/2023(deliberação dos .....)</a></li>
+          <li><a href="#" class="pdf-link">10/03/2022(deliberação dos .....)</a></li>
+          <li><a href="#" class="pdf-link">12/03/2024(deliberação dos .....)</a></li>
+          <li><a href="#" class="pdf-link">22/01/2023(deliberação dos .....)</a></li>
+          <li><a href="#" class="pdf-link">10/03/2022(deliberação dos .....)</a></li> -->
+		    </ul>
+		</span>
+      </ul>
+  
+      <iframe id="pdfViewer" src="" frameborder="0" style="width: 100%; height: 80vh; border: 1px solid #ccc; "></iframe>
+ 
+	
+	
+	<script>
+		function getEmbedUrl(url) {
+		  // Google Drive share link
+		  const driveMatch = url.match(/\/file\/d\/(.*?)\//);
+		  if (driveMatch) {
+			return `https://drive.google.com/file/d/${driveMatch[1]}/preview`;
+		  }
+		  // outros PDFs diretos
+		  return url;
+		}
+
+        // Em vez de procurar ".pdf-link" uma vez só, ouvimos cliques na página toda
+        // e verificamos se o que foi clicado é um link de PDF.
+		document.addEventListener('click', function(e) {
+            const link = e.target.closest('.pdf-link'); // Verifica se clicou num link PDF
+            
+            if (link) {
+                e.preventDefault(); // Impede de abrir nova aba
+                const targetUrl = getEmbedUrl(link.href);
+                document.getElementById('pdfViewer').src = targetUrl; // Abre no iframe
+            }
+		});
+	</script>
+  </section>
+
+
+      <section id="ideias">
+        <!-- <h2>Situação das demandas</h2><br><table id="tabelaTarefas"></table> -->
+		    <!-- <iframe style="width: 100%; height: 80vh; border: none; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTNqLiDsCoVCHW6TAR0XCg66MTbOrLJJ_mq69xFJ3Ovg9yZsqjnIlQHOnjbUXuVCgsydCGjHrfRdIV-/pubhtml?gid=0&amp;range=A1:D&amp;widget=false&amp;headers=false&amp;chrome=false"></iframe><br><br><br> -->
+		<div id="tarefas"></div>
+    <h2>Novas sugestões e demandas</h2>
+		<h4  id="sugestLabelLogin" style="color: gray;margin: 10px;">Faça login com seu e-mail para manifestação.</h4>
+    <div style="display:none;" id="botaoLogin2" class="g_id_signin"
+         data-type="standard"
+         data-size="small"
+         data-theme="outline"
+         data-text="signin"
+         data-shape="rectangular"
+         data-logo_alignment="center">
+    </div>
+        <form id="sugestao">
+          <!-- <input type="text" name="nome" placeholder="Seu Nome"> -->
+          <!-- <input type="text" name="ap" value="" size="1" placeholder="AP" > -->
+          <!-- <input type="text" name="torre" value="" size="1" placeholder="Torre" > -->
+		  
+          <textarea textarea id="sugerir" style="width: 100%;" name="mensagem"  placeholder="Mensagem ..." rows="5" ></textarea>
+
+          <!-- <div style="display:flex; align-items:center; width:100%; gap:8px;"> -->
+          <div  id="asIdeia">
+            <input type="email" id="mailideia" name="email" readonly  style="flex:1; background:#f0f0f0; color:#666; pointer-events:none;" disabled>
+            <input type="number" id="torreideia"  min="1" max="4" step="1" name="email" style="width:60px;" placeholder="Torre" >
+            <input type="number" id="apideia"  min="101" max="1010" step="1" name="email"  style="width:80px;" placeholder="AP" >
+          </div>
+          <!-- </div> -->
+        </form>
+            <button id="sugestaobutton" style="white-space:nowrap;" onclick="sugerir()">Enviar</button>
+
+        <script>
+
+          function sugerir(){
+            console.log("Indo: ");
+            let sugerir = document.getElementById("sugerir");
+            let mail = document.getElementById("mailideia");
+            let ap = document.getElementById("apideia");
+            let torre = document.getElementById("torreideia");
+                 console.log("Indo sugerir: " + sugerir.value + mail.value);  
+
+            if(sugerir.value == ""){
+              notificacao('aviso',['Por favor,','preencha a sugestão antes de enviar.',4]);
+              return;
+            } 
+
+            notificacao('animacao',['https://cdn.pixabay.com/animation/2023/08/15/07/22/07-22-02-443_512.gif',250,15]);
+
+            enviarArray( function(retornoSugerido){      
+                notificacao('aviso',['Relatório de envio',retornoSugerido,4]);
+
+                console.log("Retorno Sugerir: " + retornoSugerido);  
+              } ).sugerido(torre.value,ap.value,mail.value,sugerir.value); 
+            sugerir.value = "";
+          }
+
+          function habilitarSugestao(estado){
+            // document.querySelectorAll("#sugestao input").forEach(e => e.disabled = !estado);
+            
+            document.getElementById("asIdeia").style.display = (estado)?'block':'none';
+            document.getElementById("sugestaobutton").style.display = (estado)?'block':'none';
+          }
+        </script>
+
+      </section>
+
+      <section id="espacos">
+        <h2>Instruções de uso</h2>  <br>
+		      <h4 style="color: gray;margin: 10px;"><li>Cuidado!</li></h4><br>
+
+        <h2>Previsão de uso de espaços para eventos</h2>  <br>
+        <form>
+          <li>
+            <label>Espaço:</label>
+            <select>
+              <option>Quadra de areia (eventos autorizados do condomínio)</option>
+              <option>Campo (eventos autorizados do condomínio)</option>
+              <option>Quadra (eventos autorizados do condomínio)</option>
+            </select> &nbsp;&nbsp;
+            <label>Data:</label>
+            <input type="date">
+            <label>Horário:</label>
+            <input type="time">
+            <button type="submit">Marcar</button>
+          </li>
+        </form>
+      </section>
+      <section id="cadastro">
+
+<div style="display:none;" id="boas_vindas" ></div>
+
+
+	
+	<br>
+
+      <h2>Cadastro novo morador / Atualização de cadastro</h2>
+		<h4  id="cadastroLabelLogin" style="display: none;color: gray;margin: 10px;">Faça login com e-mail do morador responsável pelo apartamento, preencha o formulário e aguarde aprovação do síndico.</h4>
+		    <div style="display:none;" id="botaoLogin3" class="g_id_signin"
+         data-type="standard"
+         data-size="small"
+         data-theme="outline"
+         data-text="signin"
+         data-shape="rectangular"
+         data-logo_alignment="center">
+    </div>
+    <!-- <button onclick="distribuirCampos(dadosObjeto)" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; margin-bottom: 20px; font-size: 16px; border-radius: 4px;">
+        Distribuir Campos
+    </button> -->
+		<form id="residentForm" style="display: none;">
+		<div class="ap">
+      <h4 style="display:inline-block;">Moradia</h4><br>
+		  <label>Torre:<span style="color:red">*</span></label>
+		  <select id="torreCadastro" name="torre" required>
+			<option value="">Selecione</option>
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+		  </select>
+
+		  <label> | Apartamento:<span style="color:red">*</span></label>
+		  <input id="apCadastro" type="number" placeholder="101" name="apartamento" min="101" max="1010" step="1" required>
+		  
+		  <label> | Situação:<span style="color:red">*</span></label>
+		  <select id="apSituacao" name="proprietario_inquilino" required>
+			<option value="">Selecione</option>
+			<option>Proprietário</option>
+			<option>Inquilino</option>
+		  </select>
+		</div>	
+		  <div id="moradoresContainer">
+			<div class="morador">
+			  <h4 style="display:inline-block;">Morador principal</h4><br>
+			  <label> Nome completo:<span style="color:red">*</span></label>
+			  <input type="text" placeholder="Seu Nome" name="morador_nome[]" required>
+			  <label> E-mail:</label>
+			  <input type="email" placeholder="nome@email.com" name="morador_email[]" value="" id="mailcadastro" size="20" readonly   style="background:#f0f0f0;color:#666;pointer-events:none;">
+			  <label> Telefone:<span style="color:red">*</span></label>
+			  <input type="tel" placeholder="(48) 99999-9999" name="morador_telefone[]" required>
+			  <label> Ano de nascimento:<span style="color:red">*</span></label>
+			  <input type="number" placeholder="1980" name="morador_nascimento[]" min="1910" max="2100" required>
+			</div>
+		  </div>
+		  <button type="button" id="addMorador">+ morador</button><br><br>
+
+		  <label><input type="checkbox" id="hasPet"> Possui pet?</label><br>
+		  <div id="petSection" style="display:none; margin-left:20px;">
+			<div id="petsContainer"></div>
+			<button type="button" id="addPet">+ pet</button><br><br>
+		  </div>
+
+		  <label><input type="checkbox" id="hasVehicle"> Possui veículo?</label><br>
+		  <div id="vehicleSection" style="display:none; margin-left:20px;">
+			<div id="vehiclesContainer"></div>
+			<button type="button" id="addVehicle">+ carro</button><br><br>
+		  </div>
+      <br><label style="color:red;font-size:10px;">* (obrigatórios)</label><br><br>
+		  <button type="submit">Enviar</button>
+      
+		</form>
+
+		  <!-- Templates -->
+		  <div id="moradorTemplate" style="display:none;">
+			<div class="morador">
+			  <h4 style="display:inline-block;">Morador adicional </h4><br>
+			  
+			  <label>Nome completo:<span style="color:red">*</span></label>
+			  <input type="text" placeholder="Outro Nome" name="morador_nome[]" required>
+			  <label> E-mail:</label>
+			  <input type="email" placeholder="nome@email.com" name="morador_email[]">
+			  <label> Telefone:</label>
+			  <input type="tel" placeholder="(48) 99999-9999" name="morador_telefone[]">
+			  <label> Ano de nascimento:<span style="color:red">*</span></label>
+			  <input type="number" placeholder="1980" name="morador_nascimento[]" min="1910" max="2100" required>
+        <button type="button" class="removeBtn" style="background: #f39491;">Remover morador</button>
+			</div>
+		  </div>
+		  <div id="petTemplate" style="display:none;">
+			<div class="pet">
+			  <h4 style="display:inline-block;">Pet</h4><br>
+			  <label>Espécie:</label>
+			  <input type="text" placeholder="Cachorro" name="pet_tipo[]">
+			  <label> | Raça:</label>
+			  <input type="text" placeholder="VL Caramelo" name="pet_raca[]">
+			  <label> | Nome:</label>
+			  <input type="text" placeholder="Thor" name="pet_nome[]">
+			  <label> | Foto (link público):</label>
+			  <input type="text" placeholder="https://www.instagram.com/p/FStOgpKD33P/" name="pet_foto[]">
+			  <button type="button" class="removeBtn" style="background: #f39491;">Remover pet</button>
+			</div>
+		  </div>
+		  <div id="vehicleTemplate" style="display:none;">
+			<div class="vehicle">
+			  <h4 style="display:inline-block;">Veículo</h4><br>
+			  <label>Placa:<span style="color:red">*</span></label>
+			  <input type="text" placeholder="ABC-1234" name="veiculo_placa[]" required>
+			  <label> | Modelo:</label>
+			  <input type="text"  placeholder="Gol 2010" name="veiculo_modelo[]">
+			  <label> | Cor:</label>
+			  <input type="text"  placeholder="Preto" name="veiculo_cor[]">
+			  <button type="button" class="removeBtn" style="background: #f39491;">Remover veículo</button>
+			</div>
+		  </div>
+
+      
+<script>
+
+ 
+
+  // Handler de remoção por delegação
+  document.getElementById('residentForm').addEventListener('click', function(e) {
+    if (e.target.classList.contains('removeBtn')) {
+      e.target.closest('div').remove();
+    }
+  });
+
+  // Moradores
+  document.getElementById('addMorador').addEventListener('click', function() {
+    const tpl = document.getElementById('moradorTemplate').firstElementChild.cloneNode(true);
+    document.getElementById('moradoresContainer').appendChild(tpl);
+  });
+
+  // Pets
+  const hasPet = document.getElementById('hasPet');
+  hasPet.addEventListener('change', function() {
+    document.getElementById('petSection').style.display = this.checked ? 'block' : 'none';
+    if(this.checked && !document.querySelector('#petsContainer .pet')) {
+      addPet();
+    }
+  });
+  document.getElementById('addPet').addEventListener('click', addPet);
+  function addPet() {
+    const tpl = document.getElementById('petTemplate').firstElementChild.cloneNode(true);
+    document.getElementById('petsContainer').appendChild(tpl);
+  }
+
+  // Veículos
+  const hasVehicle = document.getElementById('hasVehicle');
+  hasVehicle.addEventListener('change', function() {
+    document.getElementById('vehicleSection').style.display = this.checked ? 'block' : 'none';
+    if(this.checked && !document.querySelector('#vehiclesContainer .vehicle')) {
+      addVehicle();
+    }
+  });
+  document.getElementById('addVehicle').addEventListener('click', addVehicle);
+  function addVehicle() {
+    const tpl = document.getElementById('vehicleTemplate').firstElementChild.cloneNode(true);
+    document.getElementById('vehiclesContainer').appendChild(tpl);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  document.getElementById('residentForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const formData = getFormData();
+  console.log(formData); 
+
+  notificacao('animacao',['https://cdn.pixabay.com/animation/2023/08/15/07/22/07-22-02-443_512.gif',250,15]);
+  
+  enviarArray( function(retornocadastro){      
+      notificacao('aviso',['Relatório de envio',retornocadastro,4]);
+
+      console.log("Retorno do Cadastro: " + retornocadastro);  
+      // alert("Retorno do Cadastro: " + retornocadastro);  
+    } ).cadastro(formData); 
+  
+  
+  });
+
+
+
+
+
+function getFormData() {
+  const form = document.getElementById('residentForm');
+  
+  const data = {
+    torre: form.querySelector('[name="torre"]').value,
+    apartamento: form.querySelector('[name="apartamento"]').value,
+    situacao: form.querySelector('[name="proprietario_inquilino"]').value,
+    moradores: [],
+    pets: [],
+    veiculos: []
+  };
+
+  // Coleta Moradores
+  document.querySelectorAll('#moradoresContainer .morador').forEach(el => {
+    data.moradores.push({
+      nome: el.querySelector('[name="morador_nome[]"]').value,
+      email: el.querySelector('[name="morador_email[]"]').value,
+      telefone: el.querySelector('[name="morador_telefone[]"]').value,
+      nascimento: el.querySelector('[name="morador_nascimento[]"]').value
+    });
+  });
+
+  // Coleta Pets (apenas se o checkbox estiver marcado)
+  if (document.getElementById('hasPet').checked) {
+    document.querySelectorAll('#petsContainer .pet').forEach(el => {
+      data.pets.push({
+        tipo: el.querySelector('[name="pet_tipo[]"]').value,
+        raca: el.querySelector('[name="pet_raca[]"]').value,
+        nome: el.querySelector('[name="pet_nome[]"]').value,
+        foto: el.querySelector('[name="pet_foto[]"]').value
+      });
+    });
+  }
+
+  // Coleta Veículos (apenas se o checkbox estiver marcado)
+  if (document.getElementById('hasVehicle').checked) {
+    document.querySelectorAll('#vehiclesContainer .vehicle').forEach(el => {
+      data.veiculos.push({
+        placa: el.querySelector('[name="veiculo_placa[]"]').value,
+        modelo: el.querySelector('[name="veiculo_modelo[]"]').value,
+        cor: el.querySelector('[name="veiculo_cor[]"]').value
+      });
+    });
+  }
+
+  return data;
+}
+
+
+
+
+</script>
+
+      </section>
+	   <section id="serviços">
+      <div id="servicos"></div>
+      <!-- <label><b>Acordo:</b> A divulgação de negócios privados está condicionada à disponibilização mensal de até 60 minutos voluntário na área de atuação ao condomínio.</label><br> -->
+      <div style="background-color: hsl(0deg 0% 19.83% / 48%); border-left: 5px solid hsl(197deg 100% 21.33%); padding: 10px; margin-top: 10px; margin-bottom: 15px; color: hsl(0deg 0% 100%); font-size: 11px;"><strong>Condição de Uso:</strong> A divulgação de negócios privados está condicionada à disponibilização mensal de até <strong>60 minutos de serviço voluntário</strong> ao condomínio, preferencialmente na respectiva área de atuação.</div>
+        <!-- <h2>Serviços prestados por moradores:</h2><br>
+        <ul>
+          <li>Carregadores - Patrícia <a href="#">contato</a></li>
+          <li>Adriana  - Corretora <a href="#">contato</a></li>
+          <li>Fisioterapia – Richard <a href="#">contato</a></li>
+          <li>Carregadores - Patrícia <a href="#">contato</a></li>
+          <li>Adriana  - Corretora <a href="#">contato</a></li>
+          <li>Fisioterapia – Richard <a href="#">contato</a></li>
+          <li>Carregadores - Patrícia <a href="#">contato</a></li>
+          <li>Adriana  - Corretora <a href="#">contato</a></li>
+          <li>Fisioterapia – Richard <a href="#">contato</a></li>
+          <li>Carregadores - Patrícia <a href="#">contato</a></li>
+          <li>Adriana  - Corretora <a href="#">contato</a></li>
+          <li>Fisioterapia – Richard <a href="#">contato</a></li>
+        </ul> -->
+      </section>
+	  <section id="oportunidades">
+		  <div id="vendaAP"></div>
+
+        <!-- <h2>Oportunidades de aquisição / locação:</h2><br>
+        <ul>
+          <li>Locação: Apto 101 – 2 quartos – R$ 350.000 - <a href="#">contato</a></li>
+          <li>Locação: Apto 203 – 3 quartos – R$ 450.000 - <a href="#">contato</a></li>
+          <li>Venda: Loja 01 – Térreo – R$ 200.000 - <a href="#">contato</a></li>
+        </ul> -->
+      </section>
+      <section id="grupos">
+      <div id="gruposMoradores"></div>
+        <!-- <h2>Atividades de grupo e comunidades:</h2><br>
+        <ul>
+          <li>Futebol (segunda às 19h). <a href="#">Grupo do whats</a></li>
+          <li>Vôlei (sábado às 19h). <a href="#">Grupo do whats</a></li>
+          <li>Compras e vendas. <a href="#">Grupo do whats</a></li>
+          <li>Treino funcional masculino (terças às 19h e sábado às 9h). <a href="#">Grupo do whats</a></li>
+          <li>Treino funcional feminino (quintas às 19h e sextas às 6h). <a href="#">Grupo do whats</a></li>
+        </ul> -->
+      </section>
+
+      <section id="noticias">
+        <div id="news"></div>
+
+      </section>
+      <!-- <section id="cadastro"> -->
+    </main>
+	
+	<!-- Estrutura do Visualizador de Imagens (Lightbox) -->
+	<div id="meuLightbox" class="lightbox">
+	  <span class="lightbox-close">&times;</span>
+	  <span class="lightbox-prev">&#10094;</span>
+	  <span class="lightbox-next">&#10095;</span>
+	  <img class="lightbox-content" id="lightboxImg">
+	</div>
+
+    <footer id="rodape"><br><br><br><br></footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+      const links = document.querySelectorAll('nav a');
+      const sections = document.querySelectorAll('main section');
+      links.forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          links.forEach(l => l.classList.remove('active'));
+          sections.forEach(s => s.classList.remove('active'));
+          link.classList.add('active');
+          document.querySelector(link.getAttribute('href')).classList.add('active');
+        });
+      });
+
+	  // --- Script do Visualizador de Imagens (Lightbox) ---
+	  const lightbox = document.getElementById('meuLightbox');
+	  const lightboxImg = document.getElementById('lightboxImg');
+	  
+      // MUDANÇA 1: Variáveis globais, mas sem lista fixa inicial
+	  let imagensGaleria = [];
+	  let imagemAtualIndex = 0;
+
+      // MUDANÇA 2: "Delegação de Eventos". Em vez de adicionar click em cada imagem,
+      // adicionamos ao documento todo. Se o alvo for '.galeria-imagem', executamos.
+      document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('galeria-imagem')) {
+            // Recalcula a lista de imagens presentes no DOM naquele exato momento
+            // (Isso pega inclusive as imagens do Drive que chegaram depois)
+            imagensGaleria = Array.from(document.querySelectorAll('.galeria-imagem'));
+            imagemAtualIndex = imagensGaleria.indexOf(e.target);
+            
+            lightbox.style.display = 'flex';
+            mostrarImagem(imagemAtualIndex);
+        }
+      });
+
+	  function mostrarImagem(index) {
+        // Verificação extra para garantir que o array não está vazio
+        if(imagensGaleria.length > 0) {
+		    lightboxImg.src = imagensGaleria[index].src;
+		    imagemAtualIndex = index;
+        }
+	  }
+
+	  document.querySelector('.lightbox-close').addEventListener('click', () => {
+		lightbox.style.display = 'none';
+	  });
+	  
+	  document.querySelector('.lightbox-prev').addEventListener('click', () => {
+		imagemAtualIndex = (imagemAtualIndex > 0) ? imagemAtualIndex - 1 : imagensGaleria.length - 1;
+		mostrarImagem(imagemAtualIndex);
+	  });
+
+	  document.querySelector('.lightbox-next').addEventListener('click', () => {
+		imagemAtualIndex = (imagemAtualIndex < imagensGaleria.length - 1) ? imagemAtualIndex + 1 : 0;
+		mostrarImagem(imagemAtualIndex);
+	  });
+
+	  // Fechar ao clicar fora da imagem
+	  lightbox.addEventListener('click', (e) => {
+		if (e.target === lightbox) {
+			lightbox.style.display = 'none';
+		}
+	  });
+
+    </script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+<div id="controleInicio" style="display:none;background:rgba(24, 3, 80, 0.973);">  
+    <button type="button" value='Clique para enviar JSON específico' onclick=' atualizar();'>Clique para enviar JSON: 
+      <div id="mensagemResposta" style="background-color: #3cb94ffa;"></div>
+      <div id="mensagemTeste" style="background-color: red;"></div>
+    </button>
+
+    <button  onclick='console.log(localStorage.getItem("google_credential"))' >ver token</button> 
+    <button  onclick='localStorage.removeItem("google_credential");console.log("removido")' >remover token</button> 
+    <button  onclick='localStorage.setItem("google_credential", nextElementSibling.value);console.log("cadastrado")' >cadastrar token -></button> 
+    <input type="text" if="tokenManual" value="eyJhbGciOiJSUzI1NiIsImtpZCI6IjZhOTA2ZWMxMTlkN2JhNDZhNmE0M2VmMWVhODQyZTM0YThlZTA4YjQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI5MDE0MjM2NDY3NS1vZW80aG91YWZrZmw5c2o2ZmNicXQ3MWluanY4djNqai5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImF1ZCI6IjkwMTQyMzY0Njc1LW9lbzRob3VhZmtmbDlzajZmY2JxdDcxaW5qdjh2M2pqLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTA1NzY0Nzk4MTM4NDk0OTM1MjA2IiwiZW1haWwiOiJlemVxdWluZXd0b25AZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5iZiI6MTc2NjUzNTE5MywibmFtZSI6IkV6ZXF1aWVsIE1lbG8iLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSXBuMmZjOEdMV1NxYUdETlRqZk82U1BZRy1VVl9MdmNLVVVJLXpLRkd1c0VBX3gwM3cxdz1zOTYtYyIsImdpdmVuX25hbWUiOiJFemVxdWllbCIsImZhbWlseV9uYW1lIjoiTWVsbyIsImlhdCI6MTc2NjUzNTQ5MywiZXhwIjoxNzY2NTM5MDkzLCJqdGkiOiJmYWY4OTk4MzYyZWJmMGNiZmVmMWEwNTFjYzFjNjJkODIxYjNmZDBiIn0.sojG02GOl1OvXsMaVAtoGc5Jl-6B61rGEJLUYaU30ng4RvoczgkxMwD-AFcGbXAlGDuwK8ZYxC2U_CZXwgUTB0BUH7Amx5l_3tmcegGTVNoWwdL4pjPs-P2-9P1w_LI90bWI_EiOOyli4yYTwmGojTfWfBHbBTA4U8ivaC8xdIUuFj1iwE5citJ8xT62AvCvXhnw-LKwtF28oBhrLuiSp6s-VJNzbhyCUJ7sxEoAore-cxcPAKaHWgBI7PCqnqYeQLcMvjWkRDlsv5g-CxSmZEQL7U9AQyjV6fSM3cLBJV61oZK4yNy1ifUH2DQj7Lo9iKthWdSbAOJjVr--Ws_33Q">
+
+    <div id="dadosVindos" style="background:rgba(71, 1, 54, 0.884);">Dados da funçao do GAS chamada</div>
+</div>
+    
+    
+
+
+    
+
+
+
+
+
+  <script>
+
+  // verificarLogin();
+
+  const MEU_CLIENT_ID = '90142364675-oeo4houafkfl9sj6fcbqt71injv8v3jj.apps.googleusercontent.com';
+  // 1. Inicializa o cliente do Google com suas configurações
+  google.accounts.id.initialize({
+    client_id: MEU_CLIENT_ID,
+    callback: handleCredentialResponse/* ,  login_hint: "@aluno.ifsc.edu.br",  hosted_domain: "aluno.ifsc.edu.br" */
+  });
+
+  // 2. Renderiza o botão de login dentro da sua div 'botaoLogin'
+  google.accounts.id.renderButton(
+    document.getElementById("botaoLogin"),
+    { theme: "outline", size: "large" }  // Opções de customização do botão
+  );
+
+
+
+
+// 3. Define a variável 'email' permanentemente se já tiver credencial salva
+Object.defineProperty(window, 'email', {
+  get() {
+    const savedCredential = localStorage.getItem('google_credential');
+    if (!savedCredential) return null;
+
+    // Decodifica o Token de login retirando o e-mail
+    const data = parseJwt(savedCredential);
+    const mail = data.email;
+    return mail;  // só devolve se tudo ok
+  },
+  configurable: false  // não permite redefinir/remover
+});
+
+
+
+// 4. Executa no login
+function handleCredentialResponse(response) {
+    /////////////Animação de carregamento///////////////
+    document.getElementById('dadosVindos').innerHTML = '<img src="https://cloudfront.codeproject.com/aspnet/1095434/gears.gif" alt="Carregando..." style="max-width:100%; height:auto;"> '
+  
+    // Decodifica o Token de login retirando o e-mail
+    const data = parseJwt(response.credential);           
+
+	////////////////////////////////////////////////////ID Token recebido do login (não modificável e verificável)/////////////////////////////////////////////////////////	
+      Object.defineProperty(window, "id_token", {
+      value: response.credential,
+      writable: true,      // não permite reatribuir        
+      configurable: false,  // não permite redefinir a propriedade        
+      enumerable: true
+    });
+    console.log("ID Token recebido não modificável:", window.id_token);
+  
+    let mail = data.email;
+
+    console.log("response.credential_handle: "+ response.credential)
+
+    localStorage.setItem("google_credential", response.credential);
+
+    localStorage.setItem("mail", mail );
+    // verificarLogin();   
+    notificacao('animacao',['https://cdn.pixabay.com/animation/2023/08/15/07/22/07-22-02-443_512.gif',250,15]);
+  
+   /*  enviarArray( function(mail){
+      console.log("Em login: "+mail);
+      document.getElementById("logado").style.display = "flex";
+     
+      document.getElementById('alerta').style.display = 'none'
+    } ). */
+    atualizar(); //"enviarArray" já atualiza os campos de e-mail
+    return mail;
+}
+
+
+
+// 5. Decodifica o Token de login retirando o e-mail
+function parseJwt(token) {
+  const base64Url = token.split('.')[1];
+  const base64   = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const json     = decodeURIComponent(atob(base64).split('').map(c =>
+    '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+  ).join(''));
+  return JSON.parse(json);
+}
+
+
+
+// 6. Vê se há credencial de login anterior, se há verifica a validade
+// function verificarLogin() { 
+
+//   const token = localStorage.getItem('google_credential')
+
+  //SE NÃO TEM TOKEN MOSTRA BOTÃO DO GOOGLE E CONCLUI A FUNÇÃO
+/*   if(!token){
+    console.log("Autenticação falhou. Solicitando login via Google.");
+    document.getElementById("botaoLogin").style.display = "block"; 
+    return
+  } */
+  /* else{
+
+
+    try{       
+    // 1. Chamar o endpoint de validação do Google
+    const response = UrlFetchApp.fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${token}`); //Esse fetch truca a execução se der algum erro.
+    const tokenInfo = JSON.parse(response.getContentText());
+
+    // 2. Verificar o Token de login google é válido: 'audience' (aud) - ESTA É A VERIFICAÇÃO CRUCIAL
+    if (tokenInfo.aud !== MEU_CLIENT_ID) {   
+        consolePlanilha('Token inválido: Audience não corresponde. Solicitando login via Google.'); 
+        document.getElementById("botaoLogin").style.display = "block"; 
+        return
+    }
+    else{           
+    // 3. Verificar se o criador do token é o Google
+        if (tokenInfo.iss !== 'https://accounts.google.com' && tokenInfo.iss !== 'accounts.google.com') {
+            consolePlanilha('Token inválido: Emissor incorreto.');
+            }else{//consolePlanilha("ID único usuário: "+tokenInfo.sub+"\ne-mail: "+tokenInfo.email+" e\n "+tokenInfo.iss+"\nMEU_CLIENT_ID: "+tokenInfo.aud)
+            document.getElementById("verEMail").innerHTML = tokenInfo.email;
+            consolePlanilha('Token válido');        
+            return;            
+            }
+        }
+        // return false;      
+    }catch(e){consolePlanilha(`ERRO: ${e.stack}`);return false}
+
+*/
+  // } 
+
+
+
+
+notificacao('animacao',['https://i.ibb.co/BHpSWwdL/ezgif-com-optimize.gif',250,15]);
+
+atualizar();
+  //VERIFICA O TOKEN NO BACK E RETORNA OS DADOS INICIAIS
+  function atualizar(){
+  enviarArray(      function(ini){  console.log("retornoInicial: ", ini); 
+
+  //////////////////////////// TELA INICIAL ////////////////////////////
+      let iniciacao = '<h2>Quem somos</h2><div id="apresentacao">'+ini.Informações[9][2]+'</div><hr><br>' + '<h2>Fotos</h2><div class="fotos">';
+
+      ini.images.forEach(id=>{  // Alternativa a link da imagem no src: "https://lh3.googleusercontent.com/d/ID_DA_IMAGEM_DA_PASTA_DO_GOOGLE_DRIVE"
+        iniciacao += `<img class="galeria-imagem" style="height:200px"  src="https://lh3.googleusercontent.com/d/${id}"  alt="Foto">`;
+      });
+
+      document.getElementById("inicio").innerHTML = iniciacao + '</div>';
+
+  ////////////////////////////FIM TELA INICIAL ////////////////////////////
+
+  ////////////////////////////RODAPÉ COM INFORMAÇÕES DO CONDOMÍNIO ////////////////////////////
+      document.getElementById("rodape").innerHTML = ` <p>
+          <b>Endereço:</b>`+ini.Informações[0][2]+`<a href="`+ini.Informações[1][2]+`" target="_blank">📍</a></p>
+          <p><b>Contatos:</b> <a href="http://wa.me/`+ ((ini.Informações[6][2]).replace(/\D/g, "")) +`">`+ini.Informações[6][2]+`</a> | `+ini.Informações[7][2]+` </p>
+          <p><b>Canais digitais:</b>
+            <a href="`+ini.Informações[4][2]+`">Site</a> |
+            <a href="`+ini.Informações[2][2]+`">Facebook</a> |
+            <a href="`+ini.Informações[3][2]+`">Instagram</a>
+        </p>
+        <p><b>Síndico:</b> `+ini.Informações[5][2]+` | <b>Conselheiros:</b> `+ini.Informações[8][2]+
+      `</p>`;
+  ////////////////////////////FIM RODAPÉ ////////////////////////////
+    
+  //////////////////////////// Boas vindas e mudança ////////////////////////////
+  
+  document.getElementById("boas_vindas").innerHTML = `<h2>Boas Vindas</h2>
+    <iframe width="560" height="315" 
+      src="`+ini.Informações[10][2]+`"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+    <br><br>
+    <h2>Mudança</h2>
+		  <h4 style="color: gray;margin: 10px;">`+ini.Informações[11][2]+` <br>	</h4>`
+
+  document.getElementById("boas_vindas").style.display = "block";
+
+  // document.getElementById("buenas").src = document.getElementById("video").src =
+  // "https://www.youtube.com/embed/" +  ini.Informações[10][2].split("v=")[1].split("&")[0];
+  //////////////////////////// FIM Vídeo de boas vindas ////////////////////////////
+  
+  
+  //////////////////////////// DOCUMENTOS ////////////////////////////
+  ini.documents.forEach(d=>{
+    const link = `<a href="${d.url}" class="pdf-link">${d.name.replace(".pdf","")}</a>`;
+
+    if (/^\d{2}\/\d{2}\/\d{4}/.test(d.name)) {
+      docsy.innerHTML += link;   // começa com data
+    } else {
+      docsx.innerHTML += link + ' | ';   // não começa com data
+    }
+  });
+  ////////////////////////////// FIM DOCUMENTOS ////////////////////////////
+
+
+// //////////////////////////// TABELA DE TAREFAS ////////////////////////////
+  const dadosTarefas = ini.Tarefas;
+
+  let htmlTarefas = '<h2>Situação das demandas</h2><br><table id="tabelaTarefas"><tr>' + 
+              dadosTarefas[0].map(h=>`<th>${h}</th>`).join('') + '</tr>';
+  for(let i=1;i<dadosTarefas.length;i++){
+    htmlTarefas += '<tr>' + dadosTarefas[i].map(c=>{
+      if (/^\d{4}-\d{2}-\d{2}T/.test(c)) {  return dataDD_MM_YYYY(c) }
+      return `<td>${c}</td>`;
+    }).join('') + '</tr>';
+  }
+  document.getElementById('tarefas').innerHTML = htmlTarefas  + '</tr></table><br><br>';
+// //////////////////////////// FIM TABELA DE TAREFAS ////////////////////////////
+
+
+
+// //////////////////////////// OPORTUNIDADES DE COMPRA ////////////////////////////
+  const dadosCompra = ini.Negócio_AP;
+
+  let htmlCompra = '<h2>Oportunidades de aquisição / locação:</h2><br><table id="tabelaVenda"><tr>' + 
+              dadosCompra[0].map(h=>`<th>${h}</th>`).join('') + '</tr>';
+  for(let i=1;i<dadosCompra.length;i++){
+  htmlCompra += '<tr>' + dadosCompra[i].map((c,idx)=>{
+
+    // Coluna VALOR
+    if (idx === 8) {
+      return `<td style="min-width:140px;">R$ ${Number(c).toLocaleString("pt-BR",{minimumFractionDigits:2})}</td>`;
+    }
+
+    // Coluna CONTATO
+    if (idx === 9) {
+      const tel = String(c);
+      const num = tel.replace(/\D/g,'');
+      const formatado = `(${num.slice(0,2)}) ${num.slice(2,7)}-${num.slice(7)}`;
+      return `<td style="min-width:160px;"><a href="https://wa.me/55${num}" target="_blank">${formatado}</a></td>`;
+    }
+
+    return `<td>${c}</td>`;
+  }).join('') + '</tr>';
+}
+  document.getElementById('vendaAP').innerHTML = htmlCompra  + '</tr></table><br><br>';
+// //////////////////////////// fim OPORTUNIDADES DE COMPRA ////////////////////////////
+
+
+
+
+
+
+// //////////////////////////// SERVIÇOS ////////////////////////////
+  const dadosServico = ini.Serviços;
+
+  let htmlServico = '<h2>Serviços prestados por moradores:</h2><br><table id="tabelaServicos"><tr>' + 
+              dadosServico[0].map(h=>`<th>${h}</th>`).join('') + '</tr>';
+  for(let i=1;i<dadosServico.length;i++){
+  htmlServico += '<tr>' + dadosServico[i].map((c,idx)=>{
+
+
+    // Coluna CONTATO
+    if (idx === 2) {
+      const tel = String(c);
+      const num = tel.replace(/\D/g,'');
+      const formatado = `(${num.slice(0,2)}) ${num.slice(2,7)}-${num.slice(7)}`;
+      return `<td><a href="https://wa.me/55${num}" target="_blank">${formatado}</a></td>`;
+    }
+
+    return `<td>${c}</td>`;
+  }).join('') + '</tr>';
+}
+  document.getElementById('servicos').innerHTML = htmlServico  + '</tr></table><br><br>';
+// //////////////////////////// fim SERVIÇOS ////////////////////////////
+
+
+
+
+// //////////////////////////// GRUPOS ////////////////////////////
+  const dadosGrupos = ini.Grupos;
+
+  let htmlGrupos = '<h2>Atividades de grupo e comunidades:</h2><br><table id="tabelaGrupos"><tr>' + 
+              dadosGrupos[0].map(h=>`<th>${h}</th>`).join('') + '</tr>';
+  for(let i=1;i<dadosGrupos.length;i++){
+  htmlGrupos += '<tr>' + dadosGrupos[i].map((c,idx)=>{
+
+
+    // Coluna CONTATO
+    if (idx === 1) {
+      return `<td><a href="`+String(c)+`" target="_blank">link de ingresso</a></td>`;
+    }
+
+    return `<td>${c}</td>`;
+  }).join('') + '</tr>';
+}
+  document.getElementById('gruposMoradores').innerHTML = htmlGrupos  + '</tr></table><br><br>';
+// //////////////////////////// fim GRUPOS ////////////////////////////
+
+
+
+
+// //////////////////////////// NOTÍCIAS ////////////////////////////
+      
+  const dadosNews = ini.Notícias;
+
+  let htmlNews = `<h2>Novidades e relatos:</h2><br>
+        `
+
+          /*         <div class="news">
+          <h3>Inauguração do salão de festas</h3>
+          <p>No dia 24/03/2025 às 19h houve ............</p>
+        </div> */
+         
+
+
+        '<h2>Atividades de grupo e comunidades:</h2><br><table id="tabelaNews"><tr>' + 
+              dadosNews[0].map(h=>`<th>${h}</th>`).join('') + '</tr>';
+
+  for(let i=1;i<dadosNews.length;i++){
+    htmlNews += "<div class='news'>"+
+                "<h3  style='text-decoration: underline overline;'><li><span style='color: hsl(197, 84%, 32%);/* font-size: 10px; */'>" + dataDD_MM_YYYY(dadosNews[i][0]) +
+                '</span>: ' + dadosNews[i][1] + '</li> </h3><br>'+
+                '<p>' + dadosNews[i][2] + '</p></div>';
+}
+
+
+  document.getElementById('news').innerHTML = htmlNews ;
+// //////////////////////////// fim NOTÍCIAS ////////////////////////////
+
+
+
+// //////////////////////////// PREENCHER MORADOR ////////////////////////////
+      
+  const dadosMorador = ini.moradorEncontrado;
+  // alert("Dados morador: "+JSON.stringify(dadosMorador));  
+
+   if(dadosMorador.length != 0){  distribuirCampos(dadosMorador)  };
+
+
+
+
+
+
+
+
+
+  // Função para distribuir os dados nos campos
+  function distribuirCampos(dados) {
+
+      let torreAP = dados[0][8].split("_"); // Exemplo de dado: "Torre_Apto"
+      document.getElementById("torreCadastro").value = torreAP[0]; // torre
+      document.getElementById("apCadastro").value = torreAP[1]; // apartamento
+      document.getElementById("apSituacao").value = dados[1][8]; // Situação (proprietário/inquilino)
+
+      // Listas auxiliares
+      let listaMoradores = [];
+      let listaVeiculos = [];
+      let listaPets = [];
+
+      // Processa os dados brutos
+      dados.forEach(linha => {
+          // Morador (indices 0 a 3) - Se tiver nome
+          if (linha[0] && linha[0].trim() !== "") {
+              listaMoradores.push({ nome: linha[0], email: linha[1], tel: linha[2], ano: linha[3] });
+          }
+          // Veículo (indices 5 a 7) - Se tiver placa
+          if (linha[5] && linha[5].trim() !== "") {
+              listaVeiculos.push({ placa: linha[5], modelo: linha[6], cor: linha[7] });
+          }
+          // Pet (indices 9 a 11) - Se tiver espécie
+          if (linha[9] && linha[9].trim() !== "") {
+              listaPets.push({ especie: linha[9], raca: linha[10], nome: linha[11], foto: linha[12] });
+          }
+      });
+
+      // 1. Preencher Moradores
+      const containerM = document.getElementById('moradoresContainer');
+      // Reseta para ter apenas o primeiro campo (remove extras anteriores)
+      while (containerM.children.length > 1) {
+          containerM.lastElementChild.remove();
+      }
+
+      listaMoradores.forEach((m, i) => {
+          // Se não for o primeiro, cria novo campo clicando no botão existente
+          if (i > 0) document.getElementById('addMorador').click();
+          
+          let divs = containerM.querySelectorAll('.morador');
+          let el = divs[i];
+          if (el) {
+              if(el.querySelector('[name="morador_nome[]"]')) el.querySelector('[name="morador_nome[]"]').value = m.nome;
+              if(el.querySelector('[name="morador_email[]"]')) el.querySelector('[name="morador_email[]"]').value = m.email;
+              if(el.querySelector('[name="morador_telefone[]"]')) el.querySelector('[name="morador_telefone[]"]').value = m.tel;
+              if(el.querySelector('[name="morador_nascimento[]"]')) el.querySelector('[name="morador_nascimento[]"]').value = m.ano;
+          }
+      });
+
+      // 2. Preencher Pets
+      const checkPet = document.getElementById('hasPet');
+      const containerP = document.getElementById('petsContainer');
+      
+      // Limpa container para evitar duplicidade na redistribuição
+      containerP.innerHTML = '';
+      
+      if (listaPets.length > 0) {
+          // Garante que a seção está visível
+          if (!checkPet.checked) {
+              checkPet.checked = true;
+              checkPet.dispatchEvent(new Event('change')); // Dispara evento original para mostrar div
+          }
+          // Como o evento 'change' pode adicionar um campo vazio automaticamente, limpamos de novo para garantir ordem correta
+          containerP.innerHTML = ''; 
+
+          // Cria os campos necessários
+          listaPets.forEach(() => document.getElementById('addPet').click());
+
+          // Preenche
+          let divsP = containerP.querySelectorAll('.pet');
+          listaPets.forEach((p, i) => {
+              let el = divsP[i];
+              if (el) {
+                  if(el.querySelector('[name="pet_tipo[]"]')) el.querySelector('[name="pet_tipo[]"]').value = p.especie;
+                  if(el.querySelector('[name="pet_raca[]"]')) el.querySelector('[name="pet_raca[]"]').value = p.raca;
+                  if(el.querySelector('[name="pet_nome[]"]')) el.querySelector('[name="pet_nome[]"]').value = p.nome;
+                  if(el.querySelector('[name="pet_foto[]"]')) el.querySelector('[name="pet_foto[]"]').value = p.foto;
+              }
+          });
+      } else {
+          // Se não tem pets, desmarca (opcional)
+          if (checkPet.checked) {
+            checkPet.checked = false;
+            checkPet.dispatchEvent(new Event('change'));
+          }
+      }
+
+      // 3. Preencher Veículos
+      const checkVehicle = document.getElementById('hasVehicle');
+      const containerV = document.getElementById('vehiclesContainer');
+      
+      containerV.innerHTML = '';
+
+      if (listaVeiculos.length > 0) {
+          if (!checkVehicle.checked) {
+              checkVehicle.checked = true;
+              checkVehicle.dispatchEvent(new Event('change'));
+          }
+          containerV.innerHTML = '';
+
+          listaVeiculos.forEach(() => document.getElementById('addVehicle').click());
+
+          let divsV = containerV.querySelectorAll('.vehicle');
+          listaVeiculos.forEach((v, i) => {
+              let el = divsV[i];
+              if (el) {
+                  if(el.querySelector('[name="veiculo_placa[]"]')) el.querySelector('[name="veiculo_placa[]"]').value = v.placa;
+                  if(el.querySelector('[name="veiculo_modelo[]"]')) el.querySelector('[name="veiculo_modelo[]"]').value = v.modelo;
+                  if(el.querySelector('[name="veiculo_cor[]"]')) el.querySelector('[name="veiculo_cor[]"]').value = v.cor;
+              }
+          });
+      } else {
+          if (checkVehicle.checked) {
+            checkVehicle.checked = false;
+            checkVehicle.dispatchEvent(new Event('change'));
+          }
+      }
+  }
+
+
+
+
+  // document.getElementById('news').innerHTML = htmlNews ;
+// //////////////////////////// fim PREENCHER MORADOR ////////////////////////////
+
+
+  console.log(
+        "Endereço: ", ini.Informações[0][2]    +"\n"+
+        "Link mapa: ", ini.Informações[1][2]    +"\n"+
+        "Facebook:: ", ini.Informações[2][2]    +"\n"+
+        "Instagram: ", ini.Informações[3][2]    +"\n"+
+        "Site: ", ini.Informações[4][2]    +"\n"+
+        "Síndico: ", ini.Informações[5][2]    +"\n"+
+        "telefone: ", ini.Informações[6][2]    +"\n"+
+        "E-mail: ", ini.Informações[7][2]    +"\n"+
+        "Conselheiros: ", ini.Informações[8][2]    +"\n"+
+
+        "Texto de apresentação: ", ini.Informações[9][2]    +"\n"+
+    
+        "Link vídeo boas vindas/instruções:", ini.Informações[10][2]    +"\n"+
+        "Texto de orientação de mudança:", ini.Informações[11][2]    +"\n"+
+
+
+    "Negócio AP", ini.Negócio_AP[1]    +"\n"
+  );
+        document.getElementById('dadosVindos').innerHTML = JSON.stringify(ini);
+        document.getElementById("deixarSessao").style.display = "block";
+        
+        
+
+
+        //Carrega imagens e documentos da pasta independentemente do login ser válido
+        // console.log("Falta fazer esses dados virarem as imagens e documentos em ordem alfabética (cada um no seu campo): "+retornoInicial)
+        
+      // if(retornoInicial == "Login Ausente."){  // Autenticação falhou.        
+      //   console.log("Autenticação falhou. Solicitando login via Google.");
+      //   // document.getElementById("botaoLogin").style.display = "block"; 
+      //   // [...document.getElementsByClassName("g_id_signin")].forEach(e => e.style.display = "block");
+      // }else{ /* COMANDO PARA MOSTRAR O BALÃO DE LOGIN DO GOOGLE */ 
+      //   document.getElementById('dadosVindos').innerHTML = JSON.stringify(retornoInicial);
+      //   document.getElementById("deixarSessao").style.display = "block";
+      //   // document.getElementById("botaoLogin").style.display = "none";     
+      //   // [...document.getElementsByClassName("g_id_signin")].forEach(e => e.style.display = "none");
+      // }      
+    
+    
+    
+    
+      function dataDD_MM_YYYY(c){
+          const d = new Date(c);
+          const dd = String(d.getDate()).padStart(2,'0');
+          const mm = String(d.getMonth()+1).padStart(2,'0');
+          const yyyy = String(d.getFullYear());
+          return `<td>${dd}/${mm}/${yyyy}</td>`;
+      
+      }
+    
+    
+    
+
+
+      document.getElementById("alerta").style.display = "none"; //Sumir animação
+
+    }
+
+  ).dadosIniciais();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function sair(){
+  localStorage.removeItem("google_credential");
+  document.getElementById("logado").style.display = "none";
+  document.getElementById('residentForm').style.display = 'none';
+  habilitarSugestao(false);
+  // document.getElementById("botaoLogin").style.display = "block";
+  [...document.getElementsByClassName("g_id_signin")].forEach(e => e.style.display = "block");
+  document.getElementById('residentForm').style.display = 'block';
+  document.getElementById('cadastroLabelLogin').style.display = 'block';
+  document.getElementById('sugestLabelLogin').style.display = 'block';
+  document.getElementById("verEMail").innerHTML = "";   //E-mail visível
+  document.getElementById('dadosVindos').innerHTML = "";     //EDITAR
+//   document.getElementById("listaEMail").innerHTML = "";   //Lista de e-mails de adm     //EDITAR
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////COMUNICAÇÃO COM GAS//////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    
+function enviarArray(funcaoQueRecebeDeVolta) {//alert(funcaoQueRecebeDeVolta)
+
+	let saida;
+  return new Proxy({}, {
+    get(target, funcao) {
+      return function(...args) {
+          let dadosDoHTML = args;
+          //(typeof window[funcao] === 'function') ? window[funcao](...args) : undefined;
+          // console.log("Dados Enviados Do HTML: "+dadosDoHTML)
+          //////////id: se não tiver "id_token" do Google envia do link "https://www.......?padrao" o texto: "padrao".
+          let usuario = window.id_token || location.search.slice(1), token = localStorage.getItem('google_credential');/* || "padrao"*/; //CORRIGIR: excluir opção "padrao"
+          let jsonParaEnviar = { tipo: funcao, dados: dadosDoHTML, token:  token  };
+          console.log("jsonParaEnviar: "+JSON.stringify(jsonParaEnviar))
+          //document.getElementById('output').innerText = JSON.stringify(jsonParaEnviar);
+      
+      
+      
+          /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+          const mensagemRespostaDiv = document.getElementById('mensagemResposta');
+          let saida;
+          mensagemRespostaDiv.innerHTML = 'Enviando dados...';
+          mensagemRespostaDiv.className = 'mensagem-info';
+
+          const formData = new FormData();
+          // É crucial converter o objeto JSON em uma string para enviá-lo corretamente via FormData.
+          formData.append('payloadJson', JSON.stringify(jsonParaEnviar));
+                  
+          const teste = (location.search.slice(1) == "teste"), 
+                back = (teste)?"https://script.google.com/macros/s/AKfycbxBz7h3pmIJll6C_YRgy3wmVz54kuy6cuajYwwSN1PjTSFp4Uo84xiAhT720_XhyMf4/exec":
+                            "https://script.google.com/macros/s/AKfycby2wpADWJVSXEGekpryz0XezFG3wBTOhshid-6ZV3pTD-RSPHb1KNmq_xzEKtDn94LX/exec";
+          if(teste) {document.getElementById("controleInicio").style.display = "block";}
+
+          //   console.log(back)
+
+          fetch(back, {
+              method: 'POST',
+              body: formData
+          })
+          .then(response => {
+              if (!response.ok) {
+                  return response.text().then(text => {
+                      throw new Error(`Erro do servidor (Status: ${response.status}): ${text || 'Sem detalhes.'}`);
+                  });
+              }
+              return response.json();
+          })
+          .then(data => {  ////////////Volta de dados//////////
+              console.log('Resposta do GAS:', data);
+              if (data.status === "success") { ////////////////// Exibe os dados retornados pelo GAS se der certo./////////
+                // document.getElementById("user-info").innerHTML = data.email;
+                console.log("data.email: "+data.email);
+                if(data.email){
+                  // console.log("LOGADO: "+data.email);
+                  document.getElementById("verEMail").innerHTML = data.email;
+                  document.getElementById("mailideia").value = data.email;
+                  document.getElementById("mailcadastro").value = data.email;
+                  document.getElementById("logado").style.display = "flex";
+                  [...document.getElementsByClassName("g_id_signin")].forEach(e => e.style.display = "none");
+                  document.getElementById('residentForm').style.display = 'block';
+                  document.getElementById('cadastroLabelLogin').style.display = 'none';
+                  document.getElementById('sugestLabelLogin').style.display = 'none';
+                  habilitarSugestao(true);
+                }
+                else{
+                  // console.log("NÃO LOGADO: "+data.email);
+                  [...document.getElementsByClassName("g_id_signin")].forEach(e => e.style.display = "block");
+                  document.getElementById('cadastroLabelLogin').style.display = 'block';
+                  document.getElementById('sugestLabelLogin').style.display = 'block';
+                  document.getElementById('residentForm').style.display = 'none';
+                  habilitarSugestao(false);
+                }
+                
+
+                saida = JSON.parse(data.message || '["ok"]');  //console.log("saida: "+saida);
+                // document.getElementById('mensagemTeste').innerText = "Pelo meio: "+saida;
+                funcaoQueRecebeDeVolta(saida);//Chama funcaoQueRecebeDeVoltaNoHTML(retorno) {}
+                mensagemRespostaDiv.innerHTML = "VEIO"/*. O que foi: "+ data.dadosEnviados*/;
+              } 
+              else { ///////////// Exibe os dados retornados pelo GAS se der errado./////////
+                  mensagemRespostaDiv.innerHTML = `Erro: ${data.message || 'Ocorreu um problema ao processar a resposta.'}`;
+                  //console.log(`Erro: ${data.message || 'Ocorreu um problema ao processar a resposta.'}`);
+              }
+          })
+          .catch(error => {  /////////////Exibe erros se caso nem envie/////////////
+              console.error('Erro ao enviar os dados:', error);
+              mensagemRespostaDiv.innerHTML = `Erro na comunicação: ${error.message}`;
+          });
+
+
+      };
+    }
+  });
+    
+
+  
+}
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////NOTIFICAÇÕES////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+// notificacao('aviso',['Atualização de questão!','A questão foi atualizada pois você deixou a página.',5])
+// notificacao('animacao',['https://cdn.pixabay.com/animation/2023/08/15/07/22/07-22-02-443_512.gif',250,15]);
+// notificacao('confirm', ['Alguma coisa deu errado!!!', ''/*'Deseja tentar a atividade outra vez?'+'<br><br> (feedback: '+ feedback[2]+')'*/, [ ['Voltar 15s e refazer','refazerQestaoViAu()'],   //Volta 15s e repete a pergunta ['Fazer depois',`avaliarVD('pular');`] ]]);
+
+
+
+
+
+    //Contador de tempo da notificação (fora da função para todas as chamadas por ele terem o mesmo relógio contador)
+    var contadorNotif = -2; 
+
+    function notificacao(tipo,dados) {      
+        /*tipo:   Animacao =>('animacao',[https://imagem.gif,tamanho,tempo limite]), 
+                  Aviso =>('aviso',[titulo,mensagem,tempo de exibição em segundos]) ou  
+                  Confirmação =>('confirm',[titulo,mensagem,botoesArray:[[nome,ação],...]])  
+                  Ocultar notificação => ('cancelar')       */ 
+
+      const alerta = document.getElementById('alerta');
+      alerta.style.display = 'block';
+
+      //Contador de tempo da notificação
+       clearInterval(contadorNotif);
+          
+      //Fechar ao clicar fora
+      alerta.addEventListener('click', (e) => { if (e.target === alerta) { alerta.style.display = 'none';}   });      
+      
+
+
+
+
+      switch (tipo) { 
+          case "animacao": 
+            // document.body.style.cursor = "wait";
+            alerta.innerHTML = 
+              `<img id="animac" src="` + dados[0] + `" alt="CARREGANDO">`;
+             document.getElementById('animac').style.cssText = `position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);width:`+ ((dados[1]!=undefined)?dados[1]:300) +`px;`;
+
+            //Não fechar ao clicar fora da animação
+            alerta.addEventListener('click', (e) => {
+              if (e.target === alerta) { alerta.style.display = 'block'; }
+            });      
+
+
+            // Sumir notificação após um "tempo limite"
+            /* contadorNotif = setInterval(function() {
+              dados[2]--;
+              //Sumir caixa na quantidade de segundos definida
+              if (dados[2] < 0 && alerta.style.display == 'block') {
+                clearInterval(contadorNotif); // Parar o contador
+                notificacao('aviso',['Tempo excedido!','O tempo de espera longo.<br>Recarregue a página.',60]);
+                // alerta.style.display = 'none';
+                
+              }
+            }, 1000); */
+
+
+              
+          break;
+
+          case "aviso": 
+            alerta.innerHTML = 
+            `<div class="conteudoNotif" onmousedown="moverNotif(event)">
+              <div id="fillNotif">
+                <h2 class="titulo">` + dados[0] + `</h2>
+                <p class="mensagem">` + dados[1] + `</p>
+                <button id="okNotif">Ok! (<span id="contador">` + dados[2] + `</span> s)</button>
+                
+              </div>
+            </div>`; 
+
+                  //Fechar ao clicar fora
+            const okNotif = document.getElementById('okNotif');
+            okNotif.addEventListener('click', (e) => { if (e.target === okNotif) { alerta.style.display = 'none'; document.body.style.cursor = "auto";}   }); 
+
+            //Fechar ao clicar 'ENTER'
+            document.onkeypress = function(e) {
+              // e = e || window.event;
+              if (e.key === 'Enter') {
+                  document.getElementById('okNotif').click();document.body.style.cursor = "auto";
+              }
+            };
+
+
+            // Atualizar o contador a cada segundo
+            contadorNotif = setInterval(function() {
+              dados[2]--;
+              document.getElementById('contador').textContent = dados[2];
+            //Sumir caixa na quantidade de segundos definida
+              if (dados[2] < 0) {
+                clearInterval(contadorNotif); // Parar o contador
+                alerta.style.display = 'none';
+                document.body.style.cursor = "auto";
+              }
+            }, 1000);
+          break; 
+
+          case "confirm":  
+            // document.body.style.cursor = "wait";
+            var botoesNotif = ""; 
+              
+            for(var i=0; i < dados[2].length;i++){
+              botoesNotif += `<button onclick=` + dados[2][i][1] + `>` + dados[2][i][0] + `</button>`;      
+            }
+          
+            alerta.innerHTML = 
+            `<div class="conteudoNotif" onmousedown="moverNotif(event)">
+              <h2 class="titulo">` + dados[0] + `</h2>
+              <p class="mensagem">` + dados[1] + `</p>
+              <div class="botoes">` + 
+              botoesNotif 
+              + `
+                <span onclick=""></span>
+              </div>
+            </div>`;       
+          break;  
+
+          case "cancelar":  
+              document.getElementById('alerta').style.display='none';
+          break; 
+          
+          default: 
+          break; 
+        }
+  
+    }
+
+
+
+
+
+
+
+
+
+
+
+  var isDragging = false, offsetX, offsetY;
+
+  function moverNotif(e) {
+    isDragging = true;
+    var conteudoNotif = document.querySelector('.conteudoNotif');
+    offsetX = e.clientX - conteudoNotif.getBoundingClientRect().left;
+    offsetY = e.clientY - conteudoNotif.getBoundingClientRect().top;
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  };
+
+  function onMouseMove(e) {
+    if (isDragging) {
+      var conteudoNotif = document.querySelector('.conteudoNotif');
+      conteudoNotif.style.left = e.clientX - offsetX + 'px';
+      conteudoNotif.style.top = e.clientY - offsetY + 'px';
+      conteudoNotif.style.transform = 'none'; // Remove a transformação para permitir o movimento
+    }
+  }
+
+  function onMouseUp() {
+    isDragging = false;
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  }
+
+
+
+
+</script>
