@@ -2,7 +2,7 @@
   <head>
     <meta charset="UTF-8">
     <title>Residencial Torres de San Telmo</title>
-    <link rel="icon" type="image/png" href="https://cdn.iconscout.com/icon/free/png-256/free-predio-icon-svg-download-png-449871.png">
+    <link rel="icon" type="image/png" href="https://i.ibb.co/RTWJ5zvH/icone.png">
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -461,12 +461,12 @@
         <script>
 
           function sugerir(){
-            console.log("Indo: ");
+            // console.log("Indo: ");
             let sugerir = document.getElementById("sugerir");
             let mail = document.getElementById("mailideia");
             let ap = document.getElementById("apideia");
             let torre = document.getElementById("torreideia");
-                 console.log("Indo sugerir: " + sugerir.value + mail.value);  
+                //  console.log("Indo sugerir: " + sugerir.value + mail.value);  
 
             if(sugerir.value == ""){
               notificacao('aviso',['Por favor,','preencha a sugestão antes de enviar.',4]);
@@ -478,7 +478,7 @@
             enviarArray( function(retornoSugerido){      
                 notificacao('aviso',['Relatório de envio',retornoSugerido,4]);
 
-                console.log("Retorno Sugerir: " + retornoSugerido);  
+                // console.log("Retorno Sugerir: " + retornoSugerido);  
               } ).sugerido(torre.value,ap.value,mail.value,sugerir.value); 
             sugerir.value = "";
           }
@@ -694,14 +694,14 @@
   document.getElementById('residentForm').addEventListener('submit', function(e) {
   e.preventDefault();
   const formData = getFormData();
-  console.log(formData); 
+  // console.log(formData); 
 
   notificacao('animacao',['https://cdn.pixabay.com/animation/2023/08/15/07/22/07-22-02-443_512.gif',250,15]);
   
   enviarArray( function(retornocadastro){      
       notificacao('aviso',['Relatório de envio',retornocadastro,4]);
 
-      console.log("Retorno do Cadastro: " + retornocadastro);  
+      // console.log("Retorno do Cadastro: " + retornocadastro);  
       // alert("Retorno do Cadastro: " + retornocadastro);  
     } ).cadastro(formData); 
   
@@ -1023,11 +1023,11 @@ function handleCredentialResponse(response) {
       configurable: false,  // não permite redefinir a propriedade        
       enumerable: true
     });
-    console.log("ID Token recebido não modificável:", window.id_token);
+    // console.log("ID Token recebido não modificável:", window.id_token);
   
     let mail = data.email;
 
-    console.log("response.credential_handle: "+ response.credential)
+    // console.log("response.credential_handle: "+ response.credential)
 
     localStorage.setItem("google_credential", response.credential);
 
@@ -1059,46 +1059,6 @@ function parseJwt(token) {
 
 
 
-// 6. Vê se há credencial de login anterior, se há verifica a validade
-// function verificarLogin() { 
-
-//   const token = localStorage.getItem('google_credential')
-
-  //SE NÃO TEM TOKEN MOSTRA BOTÃO DO GOOGLE E CONCLUI A FUNÇÃO
-/*   if(!token){
-    console.log("Autenticação falhou. Solicitando login via Google.");
-    document.getElementById("botaoLogin").style.display = "block"; 
-    return
-  } */
-  /* else{
-
-
-    try{       
-    // 1. Chamar o endpoint de validação do Google
-    const response = UrlFetchApp.fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${token}`); //Esse fetch truca a execução se der algum erro.
-    const tokenInfo = JSON.parse(response.getContentText());
-
-    // 2. Verificar o Token de login google é válido: 'audience' (aud) - ESTA É A VERIFICAÇÃO CRUCIAL
-    if (tokenInfo.aud !== MEU_CLIENT_ID) {   
-        consolePlanilha('Token inválido: Audience não corresponde. Solicitando login via Google.'); 
-        document.getElementById("botaoLogin").style.display = "block"; 
-        return
-    }
-    else{           
-    // 3. Verificar se o criador do token é o Google
-        if (tokenInfo.iss !== 'https://accounts.google.com' && tokenInfo.iss !== 'accounts.google.com') {
-            consolePlanilha('Token inválido: Emissor incorreto.');
-            }else{//consolePlanilha("ID único usuário: "+tokenInfo.sub+"\ne-mail: "+tokenInfo.email+" e\n "+tokenInfo.iss+"\nMEU_CLIENT_ID: "+tokenInfo.aud)
-            document.getElementById("verEMail").innerHTML = tokenInfo.email;
-            consolePlanilha('Token válido');        
-            return;            
-            }
-        }
-        // return false;      
-    }catch(e){consolePlanilha(`ERRO: ${e.stack}`);return false}
-
-*/
-  // } 
 
 
 
@@ -1108,7 +1068,7 @@ notificacao('animacao',['https://i.ibb.co/BHpSWwdL/ezgif-com-optimize.gif',250,1
 atualizar();
   //VERIFICA O TOKEN NO BACK E RETORNA OS DADOS INICIAIS
   function atualizar(){
-  enviarArray(      function(ini){  console.log("retornoInicial: ", ini); 
+  enviarArray(      function(ini){  //console.log("retornoInicial: ", ini); 
 
   //////////////////////////// TELA INICIAL ////////////////////////////
       let iniciacao = '<h2>Quem somos</h2><div id="apresentacao">'+ini.Informações[9][2]+'</div><hr><br>' + '<h2>Fotos</h2><div class="fotos">';
@@ -1435,7 +1395,7 @@ atualizar();
 
   // document.getElementById('news').innerHTML = htmlNews ;
 // //////////////////////////// fim PREENCHER MORADOR ////////////////////////////
-
+/* 
 
   console.log(
         "Endereço: ", ini.Informações[0][2]    +"\n"+
@@ -1455,7 +1415,7 @@ atualizar();
 
 
     "Negócio AP", ini.Negócio_AP[1]    +"\n"
-  );
+  ); */
         document.getElementById('dadosVindos').innerHTML = JSON.stringify(ini);
         document.getElementById("deixarSessao").style.display = "block";
         
@@ -1570,7 +1530,7 @@ function enviarArray(funcaoQueRecebeDeVolta) {//alert(funcaoQueRecebeDeVolta)
           //////////id: se não tiver "id_token" do Google envia do link "https://www.......?padrao" o texto: "padrao".
           let usuario = window.id_token || location.search.slice(1), token = localStorage.getItem('google_credential');/* || "padrao"*/; //CORRIGIR: excluir opção "padrao"
           let jsonParaEnviar = { tipo: funcao, dados: dadosDoHTML, token:  token  };
-          console.log("jsonParaEnviar: "+JSON.stringify(jsonParaEnviar))
+          //console.log("jsonParaEnviar: "+JSON.stringify(jsonParaEnviar))
           //document.getElementById('output').innerText = JSON.stringify(jsonParaEnviar);
       
       
@@ -1609,10 +1569,10 @@ function enviarArray(funcaoQueRecebeDeVolta) {//alert(funcaoQueRecebeDeVolta)
               return response.json();
           })
           .then(data => {  ////////////Volta de dados//////////
-              console.log('Resposta do GAS:', data);
+              //console.log('Resposta do GAS:', data);
               if (data.status === "success") { ////////////////// Exibe os dados retornados pelo GAS se der certo./////////
                 // document.getElementById("user-info").innerHTML = data.email;
-                console.log("data.email: "+data.email);
+                //console.log("data.email: "+data.email);
                 if(data.email){
                   // console.log("LOGADO: "+data.email);
                   document.getElementById("verEMail").innerHTML = data.email;
