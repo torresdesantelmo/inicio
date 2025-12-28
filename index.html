@@ -309,6 +309,85 @@
         }
 
 
+
+      /*<!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Pergunte a I.A.  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->*/
+
+
+    .chat-container {
+        margin-top: 20px;
+        border: 1px solid #0077cc;
+        border-radius: 12px;
+        background: #fff;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        font-family: sans-serif;
+    }
+    .chat-header {
+        background: #0077cc;
+        color: white;
+        padding: 12px;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    #chat-messages {
+        height: 250px;
+        overflow-y: auto;
+        padding: 15px;
+        background: #f8f9fa;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .msg-wrapper {
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+    }
+    .msg { 
+        padding: 8px 12px; 
+        border-radius: 15px; 
+        max-width: 80%; 
+        font-size: 14px; 
+        line-height: 1.4; 
+    }
+    .msg-user { 
+        background: #0077cc; 
+        color: white; 
+        align-self: flex-end; 
+        border-bottom-right-radius: 2px; 
+    }
+    .msg-ai { 
+        background: #e1eef7; 
+        color: #333; 
+        align-self: flex-start; 
+        border-bottom-left-radius: 2px; 
+        border: 1px solid #b3d4fc; 
+    }
+    .ai-icon {
+        width: 25px;
+        height: 25px;
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+    .chat-input-area { 
+        display: flex; 
+        padding: 10px; 
+        border-top: 1px solid #eee; 
+        gap: 8px; 
+        background: #fff; 
+    }
+    #chat-input { 
+        flex: 1; 
+        padding: 10px; 
+        border: 1px solid #ccc; 
+        border-radius: 20px; 
+        outline: none; 
+    }
     </style>
   </head>
   <body>
@@ -367,7 +446,110 @@
       </section>
 
 	  <section  id="docs" >	  
+      <h2>Pergunte à Telm.I.A.: <img src="https://i.ibb.co/4Zv8x8x7/TELM-I-A-cone.png" alt="TELM.I.A." height="65" style="vertical-align: middle;"></h2>
+<div id="textoRegimentoContainer" style="display:none;"></div>
+
+<div class="chat-container">
+    <div class="chat-header">
+        <span>Utilize a inteligência artificial para tirar suas dúvidas rápidas, mas leia os artigos para saber exatamente como proceder.</span>
+        <small id="ai-status" style="font-size: 10px; font-weight: normal;"></small>
+    </div>
+    <div id="chat-messages">
+        <!-- Mensagem Inicial com Ícone -->
+        <div class="msg-wrapper">
+            <img src="https://i.ibb.co/4Zv8x8x7/TELM-I-A-cone.png" class="ai-icon">
+            <div class="msg msg-ai">Olá, sou a TelmIA, sua assistente! Pergunte-me algo sobre as regras do condomínio que eu consulto no regimento para você.</div>
+        </div>
+    </div>
+    <div class="chat-input-area">
+        <input type="text" id="chat-input" placeholder="Ex: Posso fazer obra no domingo?">
+        <button onclick="perguntarIA()" style="border-radius: 20px; background: #0077cc; color: white; border: none; padding: 5px 15px; cursor: pointer;">Perguntar</button>
+    </div>
+</div>
+
+<script>
+async function perguntarIA() {
+    const input = document.getElementById('chat-input');
+    const msgBox = document.getElementById('chat-messages');
+    const status = document.getElementById('ai-status');
+    const container = document.getElementById('textoRegimentoContainer');
+    
+    const query = input.value.trim();
+    if (!query) return;
+
+    if (!container || !container.innerText.trim()) {
+        msgBox.innerHTML += `<div class="msg msg-user">${query}</div>`;
+        msgBox.innerHTML += `
+            <div class="msg-wrapper">
+                <img src="https://i.ibb.co/4Zv8x8x7/TELM-I-A-cone.png" class="ai-icon">
+                <div class="msg msg-ai" style="color:orange">Aguarde o carregamento do regimento ou verifique a célula C13 na planilha.</div>
+            </div>`;
+        input.value = "";
+        msgBox.scrollTop = msgBox.scrollHeight;
+        return;
+    }
+
+    const regimento = container.innerText;
+    
+    // Adiciona pergunta do usuário
+    msgBox.innerHTML += `<div class="msg msg-user">${query}</div>`;
+    input.value = "";
+    msgBox.scrollTop = msgBox.scrollHeight;
+    status.innerText = "Consultando...";
+
+    const apiKey = "AIzaSyBQma0mfbSKWf4U3bTSUfIwCf_ORAhZyFY"; 
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+    const promptSistema = `Você é o assistente do Condomínio Torres de San Telmo. 
+    Responda APENAS com base no REGIMENTO abaixo de forma curta e gentil. 
+    Se não houver a informação, diga que não encontrou e sugira falar com o síndico.
+    REGIMENTO: ${regimento}`;
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: query }] }],
+                systemInstruction: { parts: [{ text: promptSistema }] }
+            })
+        });
+
+        const data = await response.json();
+        
+        if (data.error) {
+            throw new Error(data.error.message);
+        }
+
+        const resposta = data.candidates?.[0]?.content?.parts?.[0]?.text || "Não consegui processar a resposta.";
+        
+        // Adiciona resposta da IA com o ícone
+        msgBox.innerHTML += `
+            <div class="msg-wrapper">
+                <img src="https://i.ibb.co/4Zv8x8x7/TELM-I-A-cone.png" class="ai-icon">
+                <div class="msg msg-ai">${resposta}</div>
+            </div>`;
+            
+    } catch (e) {
+        console.error(e);
+        msgBox.innerHTML += `
+            <div class="msg-wrapper">
+                <img src="https://i.ibb.co/4Zv8x8x7/TELM-I-A-cone.png" class="ai-icon">
+                <div class="msg msg-ai" style="color:red">Erro: ${e.message}</div>
+            </div>`;
+    } finally {
+        status.innerText = "";
+        msgBox.scrollTop = msgBox.scrollHeight;
+    }
+}
+
+document.getElementById('chat-input')?.addEventListener('keypress', e => { if(e.key === 'Enter') perguntarIA(); });
+</script>
+
+      <br>
+
       <h2>Documentos</h2>
+      
       <ul style="display:inline-block;line-height: 2.0;">
       Click no documento:
         <span>
@@ -1078,6 +1260,8 @@ atualizar();
       });
 
       document.getElementById("inicio").innerHTML = iniciacao + '</div>';
+      
+      document.getElementById("textoRegimentoContainer").innerText = ini.Informações[12][2];
 
   ////////////////////////////FIM TELA INICIAL ////////////////////////////
 
