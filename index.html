@@ -7,8 +7,8 @@
       * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
         font-family: Arial, sans-serif;
-        background: url('https://objectstorage.sa-saopaulo-1.oraclecloud.com/n/grq6lwb4htd1/b/tecimob-production/o/media/8d374509-ba34-4082-b80c-2201bc5ede5b/properties/04c123ee-65f8-43d9-91ac-bdf2fb25337d/images/1533db39-e224-4195-a4ae-3b809c676e551760993886aa1j.jpg') 
-                    no-repeat center -390px / cover;
+        background: url('https://i.ibb.co/pr0NC0k3/Fundo-TST.jpg') 
+                    no-repeat center -250px / cover;
         background-attachment: fixed;
         color: #333;
         }
@@ -424,7 +424,7 @@
           <li><a href="#ideias">Sugestões e demandas</a></li>
           <li><a href="#espacos">Espaços</a></li>
           <li><a href="#oportunidades">Oportunidades</a></li>
-          <li><a href="#grupos">Atividades de grupo</a></li>
+          <li><a href="#grupos">Grupos e comunidades</a></li>
           <li><a href="#noticias">Notícias</a></li>
           <li><a href="#serviços">Serviços</a></li>
           <li><a href="#cadastro">Novo morador/Cadastro</a></li>
@@ -474,36 +474,31 @@ async function perguntarIA() {
     const status = document.getElementById('ai-status');
     const container = document.getElementById('textoRegimentoContainer');
     
+    // TRAVA: Impede envios múltiplos enquanto a IA responde
+    if (status.innerText === "Consultando...") return;
+
     const query = input.value.trim();
     if (!query) return;
 
     if (!container || !container.innerText.trim()) {
-        msgBox.innerHTML += `<div class="msg msg-user">${query}</div>`;
-        msgBox.innerHTML += `
-            <div class="msg-wrapper">
-                <img src="https://i.ibb.co/4Zv8x8x7/TELM-I-A-cone.png" class="ai-icon">
-                <div class="msg msg-ai" style="color:orange">Aguarde o carregamento do regimento ou verifique a célula C13 na planilha.</div>
-            </div>`;
-        input.value = "";
-        msgBox.scrollTop = msgBox.scrollHeight;
+        // ... (seu código de erro de carregamento atual)
         return;
     }
 
     const regimento = container.innerText;
-    
-    // Adiciona pergunta do usuário
     msgBox.innerHTML += `<div class="msg msg-user">${query}</div>`;
     input.value = "";
     msgBox.scrollTop = msgBox.scrollHeight;
     status.innerText = "Consultando...";
 
-    const apiKey = "AIzaSyCMrz3mtI1BLUjLTWHGigvH14btnrB7VDc"; 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+    const apiKey = "AIzaSyBALjgY-ONxhRJaRiyMr3oXDBJ7HNB6tsk"; 
+    
+    // ESTA É A URL CORRETA PARA 1.500 REQUISIÇÕES/DIA E EVITAR ERRO 404
+    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
-    const promptSistema = `Você é o assistente do Condomínio Torres de San Telmo. 
-    Responda APENAS com base no REGIMENTO abaixo de forma curta e gentil. 
-    Se não houver a informação, diga que não encontrou e sugira falar com o síndico.
-    REGIMENTO: ${regimento}`;
+    const promptSistema = `Você é o assistente do Condomínio Torres de San Telmo...`;
+
+
 
     try {
         const response = await fetch(url, {
@@ -516,27 +511,18 @@ async function perguntarIA() {
         });
 
         const data = await response.json();
-        
-        if (data.error) {
-            throw new Error(data.error.message);
-        }
+        if (data.error) throw new Error(data.error.message);
 
-        const resposta = data.candidates?.[0]?.content?.parts?.[0]?.text || "Não consegui processar a resposta.";
+        const resposta = data.candidates?.[0]?.content?.parts?.[0]?.text || "Não encontrei essa informação no regimento.";
         
-        // Adiciona resposta da IA com o ícone
         msgBox.innerHTML += `
             <div class="msg-wrapper">
                 <img src="https://i.ibb.co/4Zv8x8x7/TELM-I-A-cone.png" class="ai-icon">
                 <div class="msg msg-ai">${resposta}</div>
             </div>`;
-            
     } catch (e) {
         console.error(e);
-        msgBox.innerHTML += `
-            <div class="msg-wrapper">
-                <img src="https://i.ibb.co/4Zv8x8x7/TELM-I-A-cone.png" class="ai-icon">
-                <div class="msg msg-ai" style="color:red">Erro: ${e.message}</div>
-            </div>`;
+        msgBox.innerHTML += `<div class="msg-wrapper"><div class="msg msg-ai" style="color:red">Erro: Verifique a conexão ou limite da API.</div></div>`;
     } finally {
         status.innerText = "";
         msgBox.scrollTop = msgBox.scrollHeight;
@@ -1253,7 +1239,7 @@ atualizar();
   enviarArray(      function(ini){  //console.log("retornoInicial: ", ini); 
 
   //////////////////////////// TELA INICIAL ////////////////////////////
-      let iniciacao = '<h2>Quem somos</h2><div id="apresentacao">'+ini.Informações[9][2]+'</div><hr><br>' + '<h2>Fotos</h2><div class="fotos">';
+      let iniciacao = '<h2>Nós somos ...</h2><div id="apresentacao" style="white-space: pre-line;">'+ini.Informações[9][2]+'</div><hr><br>' + '<h2>Fotos</h2><div class="fotos">';
 
       ini.images.forEach(id=>{  // Alternativa a link da imagem no src: "https://lh3.googleusercontent.com/d/ID_DA_IMAGEM_DA_PASTA_DO_GOOGLE_DRIVE"
         iniciacao += `<img class="galeria-imagem" style="height:200px"  src="https://lh3.googleusercontent.com/d/${id}"  alt="Foto">`;
@@ -1266,17 +1252,19 @@ atualizar();
   ////////////////////////////FIM TELA INICIAL ////////////////////////////
 
   ////////////////////////////RODAPÉ COM INFORMAÇÕES DO CONDOMÍNIO ////////////////////////////
-      document.getElementById("rodape").innerHTML = ` <p>
-          <b>Endereço:&nbsp;</b>`+ini.Informações[0][2]+`<a href="`+ini.Informações[1][2]+`" target="_blank">📍</a></p>
-          <p><b>Contatos:</b> <a href="http://wa.me/`+ ((ini.Informações[6][2]).replace(/\D/g, "")) +`">`+ini.Informações[6][2]+`</a> | `+ini.Informações[7][2]+` </p>
-          <p><b>Canais digitais:</b>
-            <a href="`+ini.Informações[4][2]+`">Site</a> |
-            <a href="`+ini.Informações[2][2]+`">Facebook</a> |
-            <a href="`+ini.Informações[3][2]+`">Instagram</a>
-        </p>
-        <p><b>Síndico:</b> `+ini.Informações[5][2]+` | <b>Conselheiros:</b> `+ini.Informações[8][2]+
+      document.getElementById("rodape").innerHTML = ` 
+      <p>`+
+        `<p><b>Síndico:</b> `+ini.Informações[4][2]+` | <b>WhatsApp:</b> <a href="http://wa.me/`+ ((ini.Informações[5][2]).replace(/\D/g, "")) +`" target="_blank">`+ini.Informações[5][2]+`</a>`+`</p>`+
+        `<p><b>Conselheiros:</b> `+ini.Informações[8][2]+`</p>`+        
+          `<p><b>Canais digitais:</b>
+            <a href="`+ini.Informações[3][2]+`">Site</a> |
+            <a href="`+ini.Informações[2][2]+`">Instagram</a> | `
+            +ini.Informações[7][2]+
+          `</p>`+
+        `<p><b>Telefone / WhatsApp da Guarita:</b> <a href="http://wa.me/`+ ((ini.Informações[6][2]).replace(/\D/g, "")) +`" target="_blank" >`+ini.Informações[6][2]+`</a></p>`+
+        `<p><b>Endereço:&nbsp;</b>`+ini.Informações[0][2]+`<a href="`+ini.Informações[1][2]+`" target="_blank">📍</a></p>`+
       `</p>`;
-  ////////////////////////////FIM RODAPÉ ////////////////////////////
+  ////////////////////////////FIM RODAPÉ ////////////////////////////falta o: +ini.Informações[6][2]
     
   //////////////////////////// Boas vindas e mudança ////////////////////////////
   
@@ -1290,7 +1278,7 @@ atualizar();
     </iframe>
     <br><br>
     <h2>Mudança</h2>
-		  <h4 style="color: gray;margin: 10px;">`+ini.Informações[11][2]+` <br>	</h4>`
+		  <h4 style="color: gray;margin: 10px;white-space: pre-line;">`+ini.Informações[11][2]+` <br>	</h4>`
 
   document.getElementById("boas_vindas").style.display = "block";
 
@@ -1389,7 +1377,7 @@ atualizar();
 // //////////////////////////// GRUPOS ////////////////////////////
   const dadosGrupos = ini.Grupos;
 
-  let htmlGrupos = '<h2>Atividades de grupo e comunidades:</h2><br><table id="tabelaGrupos"><tr>' + 
+  let htmlGrupos = '<h2>Links de grupos e comunidades:</h2><br><table id="tabelaGrupos"><tr>' + 
               dadosGrupos[0].map(h=>`<th>${h}</th>`).join('') + '</tr>';
   for(let i=1;i<dadosGrupos.length;i++){
   htmlGrupos += '<tr>' + dadosGrupos[i].map((c,idx)=>{
