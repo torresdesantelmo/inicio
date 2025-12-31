@@ -388,6 +388,112 @@
         border-radius: 20px; 
         outline: none; 
     }
+
+
+
+   
+      /*<!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Dúvidas frequentes  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->*/
+
+
+      /* Estilos FAQ */
+        .faq-search-box {
+            width: 100%;
+            padding: 12px;
+            margin: 20px 0;
+            border: 2px solid #0077cc;
+            border-radius: 8px;
+            outline: none;
+        }
+        .faq-item {
+            border: 1px solid #ddd;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .faq-question {
+            width: 100%;
+            text-align: left;
+            padding: 15px;
+            background: #f1f5f9;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            color: #0077cc;
+            display: flex;
+            justify-content: space-between;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease-out;
+            background: #fff;
+            padding: 0 15px;
+            font-size: 14px;
+            color: #444;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 15px;
+            border-top: 1px solid #eee;
+            white-space: pre-line;
+        }
+        .faq-item.active .faq-question { background: #0077cc; color: white; }
+
+
+
+
+
+
+   
+      /*<!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Oportunidades <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->*/
+
+
+
+    #vendeAluga {
+      background: hsla(197, 84%, 32%, 0.15);
+      /* padding: 20px; */
+      border-radius: 8px;
+      margin: 20px auto;
+      display: inline-flex;
+      flex-direction: row;
+      gap: 10px;
+      flex-wrap: wrap;
+      /* align-content: space-around; */
+      /* justify-content: space-around; */
+      align-items: center;
+      width: 900px;
+    }
+
+    #vendeAluga label { 
+        font-weight: bold; 
+        font-size: 14px; 
+        width: 100px;
+        text-align: center;
+    }
+
+    /* Define um tamanho padrão para todos os inputs */
+    #vendeAluga input, #vendeAluga select, #vendeAluga textarea {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 8px;
+        width: 250px; /* Tamanho padrão para os campos curtos */
+        box-sizing: border-box;
+         width: 20%
+    }
+    #vendeAluga textarea {
+        width: 600px;
+    }
+
+    /* Faz com que os campos com esta classe ocupem 100% da largura do form */
+    #tabelaVenda {
+        font-size: 14px;
+        padding: 7px 4px;
+    }
+    #tabelaVenda th,td{padding: 7px 4px;}
     </style>
   </head>
   <body>
@@ -422,7 +528,7 @@
           <li><a href="#quem-somos" class="active">Quem somos</a></li>
           <li><a href="#docs">Documentos internos</a></li>
           <li><a href="#ideias">Sugestões e demandas</a></li>
-          <li><a href="#espacos">Espaços</a></li>
+          <li><a href="#duvidas">Dúvidas do regimento</a></li>
           <li><a href="#oportunidades">Oportunidades</a></li>
           <li><a href="#grupos">Grupos e comunidades</a></li>
           <li><a href="#noticias">Notícias</a></li>
@@ -446,93 +552,7 @@
       </section>
 
 	  <section  id="docs" >	  
-      <h2>Pergunte à Telm.I.A.: <img src="https://i.ibb.co/4Zv8x8x7/TELM-I-A-cone.png" alt="TELM.I.A." height="65" style="vertical-align: middle;"></h2>
-<div id="textoRegimentoContainer" style="display:none;"></div>
 
-<div class="chat-container">
-    <div class="chat-header">
-        <span>Utilize a inteligência artificial para tirar suas dúvidas rápidas, mas leia os artigos para saber exatamente como proceder.</span>
-        <small id="ai-status" style="font-size: 10px; font-weight: normal;"></small>
-    </div>
-    <div id="chat-messages">
-        <!-- Mensagem Inicial com Ícone -->
-        <div class="msg-wrapper">
-            <img src="https://i.ibb.co/4Zv8x8x7/TELM-I-A-cone.png" class="ai-icon">
-            <div class="msg msg-ai">Olá, sou a TelmIA, sua assistente! Pergunte-me algo sobre as regras do condomínio que eu consulto no regimento para você.</div>
-        </div>
-    </div>
-    <div class="chat-input-area">
-        <input type="text" id="chat-input" placeholder="Ex: Posso fazer obra no domingo?">
-        <button onclick="perguntarIA()" style="border-radius: 20px; background: #0077cc; color: white; border: none; padding: 5px 15px; cursor: pointer;">Perguntar</button>
-    </div>
-</div>
-
-<script>
-async function perguntarIA() {
-    const input = document.getElementById('chat-input');
-    const msgBox = document.getElementById('chat-messages');
-    const status = document.getElementById('ai-status');
-    const container = document.getElementById('textoRegimentoContainer');
-    
-    // TRAVA: Impede envios múltiplos enquanto a IA responde
-    if (status.innerText === "Consultando...") return;
-
-    const query = input.value.trim();
-    if (!query) return;
-
-    if (!container || !container.innerText.trim()) {
-        // ... (seu código de erro de carregamento atual)
-        return;
-    }
-
-    const regimento = container.innerText;
-    msgBox.innerHTML += `<div class="msg msg-user">${query}</div>`;
-    input.value = "";
-    msgBox.scrollTop = msgBox.scrollHeight;
-    status.innerText = "Consultando...";
-
-    const apiKey = "AIzaSyBALjgY-ONxhRJaRiyMr3oXDBJ7HNB6tsk"; 
-    
-    // ESTA É A URL CORRETA PARA 1.500 REQUISIÇÕES/DIA E EVITAR ERRO 404
-    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
-    const promptSistema = `Você é o assistente do Condomínio Torres de San Telmo...`;
-
-
-
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: query }] }],
-                systemInstruction: { parts: [{ text: promptSistema }] }
-            })
-        });
-
-        const data = await response.json();
-        if (data.error) throw new Error(data.error.message);
-
-        const resposta = data.candidates?.[0]?.content?.parts?.[0]?.text || "Não encontrei essa informação no regimento.";
-        
-        msgBox.innerHTML += `
-            <div class="msg-wrapper">
-                <img src="https://i.ibb.co/4Zv8x8x7/TELM-I-A-cone.png" class="ai-icon">
-                <div class="msg msg-ai">${resposta}</div>
-            </div>`;
-    } catch (e) {
-        console.error(e);
-        msgBox.innerHTML += `<div class="msg-wrapper"><div class="msg msg-ai" style="color:red">Erro: Verifique a conexão ou limite da API.</div></div>`;
-    } finally {
-        status.innerText = "";
-        msgBox.scrollTop = msgBox.scrollHeight;
-    }
-}
-
-document.getElementById('chat-input')?.addEventListener('keypress', e => { if(e.key === 'Enter') perguntarIA(); });
-</script>
-
-      <br>
 
       <h2>Documentos</h2>
       
@@ -661,9 +681,169 @@ document.getElementById('chat-input')?.addEventListener('keypress', e => { if(e.
 
       </section>
 
-      <section id="espacos">
-        <h2>Instruções de uso</h2>  <br>
-		      <h4 style="color: gray;margin: 10px;"><li>Cuidado!</li></h4><br>
+      <section id="duvidas">
+        <h2>Pergunte à Telm.I.A.: <img src="https://i.ibb.co/4Zv8x8x7/TELM-I-A-cone.png" alt="TELM.I.A." height="65" style="vertical-align: middle;"></h2>
+        <div id="textoRegimentoContainer" style="display:none;"></div>
+
+        <div class="chat-container">
+            <div class="chat-header">
+                <span style="font-size: 12px;">TelmIA - Assistente do Condomínio</span>
+                <small id="ai-status" style="font-size: 10px; font-weight: normal;"></small>
+            </div>
+            <div id="chat-messages">
+                <div class="msg-wrapper">
+                    <img src="https://i.ibb.co/4Zv8x8x7/TELM-I-A-cone.png" class="ai-icon" onerror="this.style.display='none'">
+                    <div class="msg msg-ai">Olá, sou a TelmIA! Como posso ajudar com as regras do regimento hoje?</div>
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Ex: Horário de silêncio?">
+                <button id="send-btn" onclick="perguntarIA()" style="border-radius: 20px; background: #0077cc; color: white; border: none; padding: 5px 15px; cursor: pointer;">Enviar</button>
+            </div>
+        </div>
+
+        <script>
+        /**
+         * CONFIGURAÇÃO DE SEGURANÇA
+         * Opção A (Proxy): Se tiveres um backend, coloca o URL aqui.
+         * Opção B (Direto): Se usares a apiKey aqui, DEVES restringir a chave 
+         * no Google Cloud Console por "Referrer" (teudominio.com/*).
+         */
+        const proxyUrl = ""; // Deixar vazio se usar apiKey direto
+        const apiKey = "AIzaSyDw4EK849kB65mAkViatfHtFRXHWIIZ7Jk";    // Inserir sua nova chave aqui
+
+        async function fetchWithRetry(url, options, retries = 5, delay = 1000) {
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    const errorMsg = errorData.error?.message || "";
+                    if (errorMsg.includes("leaked")) throw new Error("CHAVE_EXPOSTA");
+                    if (retries > 0 && (response.status === 429 || response.status >= 500)) {
+                        await new Promise(r => setTimeout(r, delay));
+                        return fetchWithRetry(url, options, retries - 1, delay * 2);
+                    }
+                    throw new Error(errorMsg || `Erro ${response.status}`);
+                }
+                return response;
+            } catch (error) {
+                if (error.message === "CHAVE_EXPOSTA") throw error;
+                if (retries > 0) {
+                    await new Promise(r => setTimeout(r, delay));
+                    return fetchWithRetry(url, options, retries - 1, delay * 2);
+                }
+                throw error;
+            }
+        }
+
+        async function perguntarIA() {
+            const input = document.getElementById('chat-input');
+            const msgBox = document.getElementById('chat-messages');
+            const status = document.getElementById('ai-status');
+            const regContainer = document.getElementById('textoRegimentoContainer');
+            
+            if (!proxyUrl && (!apiKey || apiKey.trim() === "")) {
+                msgBox.innerHTML += `<div class="msg-wrapper"><div class="msg warning-msg">Erro: Chave não configurada.</div></div>`;
+                return;
+            }
+
+            const query = input.value.trim();
+            if (!query || status.innerText === "...") return;
+
+            msgBox.innerHTML += `<div class="msg-wrapper" style="justify-content: flex-end;"><div class="msg msg-user">${query}</div></div>`;
+            input.value = "";
+            msgBox.scrollTop = msgBox.scrollHeight;
+            status.innerText = "...";
+
+            const regimento = regContainer ? regContainer.innerText : "";
+            const model = "gemini-2.5-flash-preview-09-2025";
+            
+            // Define se chama o Proxy ou a API Direta
+            const url = proxyUrl ? proxyUrl : `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+
+            const systemPrompt = `Você é a TelmIA, assistente do Condomínio Torres de San Telmo. 
+            Responda curto e direto apenas com base no Regimento: ${regimento}`;
+
+            try {
+                const response = await fetchWithRetry(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: query }] }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] }
+                    })
+                });
+
+                const data = await response.json();
+                const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sem resposta.";
+                msgBox.innerHTML += `<div class="msg-wrapper"><img src="https://i.ibb.co/4Zv8x8x7/TELM-I-A-cone.png" class="ai-icon"><div class="msg msg-ai">${text}</div></div>`;
+            } catch (e) {
+                let msg = "Erro de conexão.";
+                if (e.message === "CHAVE_EXPOSTA") msg = "Chave bloqueada! Restrinja-a no console do Google Cloud.";
+                msgBox.innerHTML += `<div class="msg-wrapper"><div class="msg msg-ai" style="color:red">${msg}</div></div>`;
+            } finally {
+                status.innerText = "";
+                msgBox.scrollTop = msgBox.scrollHeight;
+            }
+        }
+
+        document.getElementById('chat-input')?.addEventListener('keypress', e => { if(e.key === 'Enter') perguntarIA(); });
+        </script>
+      <br><br>
+    <h2>Dúvidas Frequentes</h2>
+    <input type="text" id="faq-search" class="faq-search-box" placeholder="Pesquisar assunto..." onkeyup="filtrarDuvidas()">
+    <div id="duvFreq">Carregando dúvidas...</div>
+
+
+
+    <script>  
+              
+        function renderizarDuvidas(dados) {
+            const container = document.getElementById('duvFreq');
+            if (!dados || dados.length <= 1) {
+                container.innerHTML = "Sem dados.";
+                return;
+            }
+
+            let html = "";
+            for (let i = 1; i < dados.length; i++) {
+                html += `
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span class="faq-title">${dados[i][0]}</span> <span>+</span>
+                        </button>
+                        <div class="faq-answer">${dados[i][1]}</div>
+                    </div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        function toggleFaq(btn) {
+            const item = btn.parentElement;
+            const isActive = item.classList.contains('active');
+            // Fecha todos os outros antes de abrir o atual
+            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+            if (!isActive) item.classList.add('active');
+        }
+
+        function filtrarDuvidas() {
+            const termo = document.getElementById('faq-search').value.toLowerCase();
+            const itens = document.querySelectorAll('.faq-item');
+
+            itens.forEach(item => {
+                // Pega o texto do título e da resposta combinados
+                const conteudoCompleto = item.innerText.toLowerCase();
+                
+                if (conteudoCompleto.includes(termo)) {
+                    item.style.display = "block";
+                } else {
+                    item.style.display = "none";
+                    item.classList.remove('active'); // Fecha se estiver escondido
+                }
+            });
+        }
+    </script>
+<!-- 		 <h4 style="color: gray;margin: 10px;"><li>Cuidado!</li></h4><br>
 
         <h2>Previsão de uso de espaços para eventos</h2>  <br>
         <form>
@@ -680,7 +860,7 @@ document.getElementById('chat-input')?.addEventListener('keypress', e => { if(e.
             <input type="time">
             <button type="submit">Marcar</button>
           </li>
-        </form>
+        </form> -->
       </section>
       <section id="cadastro">
 
@@ -956,13 +1136,131 @@ function getFormData() {
       </section>
 	  <section id="oportunidades">
 		  <div id="vendaAP"></div>
+<h4  id="oportLabelLogin" style="color: gray;margin: 10px;">Se você é proprietário, faça login com seu e-mail cadastrado para anunciar seu apartamento.</h4>
+    <div style="display:none;" id="botaoLogin4" class="g_id_signin"
+         data-type="standard"
+         data-size="small"
+         data-theme="outline"
+         data-text="signin"
+         data-shape="rectangular"
+         data-logo_alignment="center">
+    </div>
+      <button id="cadastrarOportunidade" style="margin-bottom: 20px; display:none;" onclick="document.getElementById('formOportunidade').style.display='block'; this.style.display='none';">Anunciar meu apartamento</button>
+    <div  id="formOportunidade" style="text-align:center;display:none;">  
+        <form id="vendeAluga" onsubmit="event.preventDefault(); anunciar();">
+          <label>Tipo:</label>
+          <select name="tipo" required>
+              <option value="">Selecione</option>
+              <option>Locação</option>
+              <option>Venda</option>
+          </select>
 
-        <!-- <h2>Oportunidades de aquisição / locação:</h2><br>
-        <ul>
-          <li>Locação: Apto 101 – 2 quartos – R$ 350.000 - <a href="#">contato</a></li>
-          <li>Locação: Apto 203 – 3 quartos – R$ 450.000 - <a href="#">contato</a></li>
-          <li>Venda: Loja 01 – Térreo – R$ 200.000 - <a href="#">contato</a></li>
-        </ul> -->
+          <label>Torre:</label>
+          <input type="number" name="torre" min="1" max="4" required>
+
+          <label>Apartamento:</label>
+          <input type="number" name="ap" min="101" max="1010" required>
+<br>
+          <label>Quartos:</label>
+          <input type="number" name="quartos" min="1" max="3" required>
+
+          <label>Banheiros:</label>
+          <input type="number" name="banheiros" min="1" max="2" required>
+
+          <label>Mobília:</label>
+          <select name="mobilia" required>
+              <option value="">Selecione</option>
+              <option>Vazio</option>
+              <option>Semi-mobiliado</option>
+              <option>Mobiliado</option>
+          </select>
+<br>
+          <label>Proponente:</label>
+          <select name="proponente" required>
+              <option value="">Selecione</option>
+              <option>Proprietário</option>
+              <option>Imobiliária</option>
+          </select>
+
+          <label class="full-width">Valor:</label>
+          <input type="text" name="valor" id="form-valor" placeholder="R$ 0,00" class="full-width" required>
+
+          <label class="full-width">Contato:</label>
+          <input type="text" name="contato" id="form-contato" placeholder="(00) 00000-0000" class="full-width" required>
+<br>
+          <label class="full-width">Descrição:</label>
+          <textarea name="descricao" rows="3" class="full-width" placeholder="Detalhes do imóvel..."></textarea>
+
+          <input type="number" name="linhaEditar" id="linhaEditar" style="display:none;">
+
+          <button type="submit" style="margin: 30px;">Enviar Anúncio</button>
+        </form>
+      </div>
+      <script>
+      // Máscara de Valor (Moeda)
+      document.getElementById('form-valor').addEventListener('input', function(e) {
+          let v = e.target.value.replace(/\D/g, "");
+          v = (v / 100).toFixed(2).replace(".", ",");
+          v = v.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+          e.target.value = "R$ " + v;
+      });
+
+      // Máscara de Contato (Telefone)
+      document.getElementById('form-contato').addEventListener('input', function(e) {
+          let v = e.target.value.replace(/\D/g, "");
+          v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
+          v = v.replace(/(\d)(\d{4})$/, "$1-$2");
+          e.target.value = v;
+      });
+
+      function anunciar() {
+          const form = document.getElementById('vendeAluga');
+          const formData = new FormData(form);
+          const dadosFormulario = Object.fromEntries(formData.entries());
+
+          dadosFormulario.email = document.getElementById('verEMail').innerText
+
+          notificacao('animacao', ['https://cdn.pixabay.com/animation/2023/08/15/07/22/07-22-02-443_512.gif', 250, 15]);
+
+          enviarArray(function(retornoVenda) {
+
+            atualizar();
+              notificacao('aviso', ['Relatório de envio', retornoVenda, 4]);
+              if(retornoVenda.includes("sucesso")) form.reset();
+          }).anunciado(dadosFormulario);
+      }
+
+
+
+      function editOport(linha) {
+        document.getElementById('formOportunidade').style.display='block'; 
+        document.getElementById("cadastrarOportunidade").style.display='none';
+        const tabela = document.getElementById('tabelaVenda');
+        const row = tabela.rows[linha];
+        const form = document.getElementById('vendeAluga');
+        document.getElementById("linhaEditar").value = linha; 
+
+        // Distribuição dos dados baseada nos índices das colunas da tabela
+        form.tipo.value = row.cells[0].innerText;
+        form.torre.value = row.cells[1].innerText;
+        form.ap.value = row.cells[2].innerText;
+        form.quartos.value = row.cells[3].innerText;
+        form.banheiros.value = row.cells[4].innerText;
+        form.mobilia.value = row.cells[5].innerText;
+        form.proponente.value = row.cells[6].innerText;
+        form.descricao.value = row.cells[7].innerText;
+        form.valor.value = row.cells[8].innerText;
+        form.contato.value = row.cells[9].innerText;
+
+        // Scroll suave para o formulário para facilitar a visualização
+        form.scrollIntoView({ behavior: 'smooth' });
+      }
+      </script>
+
+
+
+
+
       </section>
       <section id="grupos">
       <div id="gruposMoradores"></div>
@@ -1231,7 +1529,7 @@ function parseJwt(token) {
 
 
 
-notificacao('animacao',['https://i.ibb.co/BHpSWwdL/ezgif-com-optimize.gif',250,15]);
+notificacao('animacao',['https://i.ibb.co/KxVsXBwB/Predio-oficial.gif',250,15]);
 
 atualizar();
   //VERIFICA O TOKEN NO BACK E RETORNA OS DADOS INICIAIS
@@ -1329,6 +1627,14 @@ atualizar();
       return `<td style="min-width:140px;">R$ ${Number(c).toLocaleString("pt-BR",{minimumFractionDigits:2})}</td>`;
     }
 
+    // E-mail (opção de editar)   document.getElementById('verEMail').innerText
+    if (idx === 10) {
+      return `<td style="min-width:200px;"><a href="mailto:${c}" target="_blank">${c}</a>`+
+        ((c == document.getElementById('verEMail').innerText)?"<span onclick='editOport("+i+")' style='cursor: pointer;'> ✏️</span>":"")+
+        `</td>`;
+    }
+
+
     // Coluna CONTATO
     if (idx === 9) {
       const tel = String(c);
@@ -1400,6 +1706,7 @@ atualizar();
 // //////////////////////////// NOTÍCIAS ////////////////////////////
       
   const dadosNews = ini.Notícias;
+// console.log("dadosDuvidas: ", dadosNews); 
 
   let htmlNews = `<h2>Novidades e relatos:</h2><br>
         `
@@ -1427,12 +1734,50 @@ atualizar();
 
 
 
+
+
+// //////////////////////////// DÚVIDAS FREQUENTES ////////////////////////////
+  const dadosDuvidas = ini.Dúv_Freq;
+
+// document.getElementById('duvFreq').innerHTML = "Aqui vai o HTML de saída das dúvidas frequentes.";
+
+
+
+renderizarDuvidas(dadosDuvidas);
+
+
+/*   let htmlDuvidas = '<h2>Links de grupos e comunidades:</h2><br><table id="tabelaDuvidas"><tr>' + 
+              dadosDuvidas[0].map(h=>`<th>${h}</th>`).join('') + '</tr>';
+  for(let i=1;i<dadosDuvidas.length;i++){
+  htmlDuvidas += '<tr>' + dadosDuvidas[i].map((c,idx)=>{
+
+
+    // Coluna CONTATO
+    if (idx === 1) {
+      return `<td><a href="`+String(c)+`" target="_blank">link de ingresso</a></td>`;
+    }
+
+    return `<td>${c}</td>`;
+  }).join('') + '</tr>';
+}
+  */
+// //////////////////////////// fim DÚVIDAS FREQUENTES ////////////////////////////
+
+
+
+
+
 // //////////////////////////// PREENCHER MORADOR ////////////////////////////
       
   const dadosMorador = ini.moradorEncontrado;
   // alert("Dados morador: "+JSON.stringify(dadosMorador));  
 
-   if(dadosMorador.length != 0){  distribuirCampos(dadosMorador)  };
+   if(dadosMorador.length != 0){  
+    distribuirCampos(dadosMorador);
+    if(dadosMorador[1][8] == "Proprietário"){
+      document.getElementById("cadastrarOportunidade").style.display = "block";
+    }
+   };
 
 
 
@@ -1657,11 +2002,14 @@ function sair(){
   localStorage.removeItem("google_credential");
   document.getElementById("logado").style.display = "none";
   document.getElementById('residentForm').style.display = 'none';
+  document.getElementById('formOportunidade').style.display='none'; 
+
   habilitarSugestao(false);
   // document.getElementById("botaoLogin").style.display = "block";
   [...document.getElementsByClassName("g_id_signin")].forEach(e => e.style.display = "block");
   document.getElementById('residentForm').style.display = 'block';
   document.getElementById('cadastroLabelLogin').style.display = 'block';
+  document.getElementById('oportLabelLogin').style.display = 'block';
   document.getElementById('sugestLabelLogin').style.display = 'block';
   document.getElementById("verEMail").innerHTML = "";   //E-mail visível
   document.getElementById('dadosVindos').innerHTML = "";     //EDITAR
@@ -1702,7 +2050,7 @@ function enviarArray(funcaoQueRecebeDeVolta) {//alert(funcaoQueRecebeDeVolta)
           //////////id: se não tiver "id_token" do Google envia do link "https://www.......?padrao" o texto: "padrao".
           let usuario = window.id_token || location.search.slice(1), token = localStorage.getItem('google_credential');/* || "padrao"*/; //CORRIGIR: excluir opção "padrao"
           let jsonParaEnviar = { tipo: funcao, dados: dadosDoHTML, token:  token  };
-          //console.log("jsonParaEnviar: "+JSON.stringify(jsonParaEnviar))
+          // console.log("jsonParaEnviar: "+JSON.stringify(jsonParaEnviar))
           //document.getElementById('output').innerText = JSON.stringify(jsonParaEnviar);
       
       
@@ -1741,7 +2089,7 @@ function enviarArray(funcaoQueRecebeDeVolta) {//alert(funcaoQueRecebeDeVolta)
               return response.json();
           })
           .then(data => {  ////////////Volta de dados//////////
-              //console.log('Resposta do GAS:', data);
+              // console.log('Resposta do GAS:', data);
               if (data.status === "success") { ////////////////// Exibe os dados retornados pelo GAS se der certo./////////
                 // document.getElementById("user-info").innerHTML = data.email;
                 //console.log("data.email: "+data.email);
@@ -1755,6 +2103,7 @@ function enviarArray(funcaoQueRecebeDeVolta) {//alert(funcaoQueRecebeDeVolta)
                   document.getElementById('residentForm').style.display = 'block';
                   document.getElementById('cadastroLabelLogin').style.display = 'none';
                   document.getElementById('sugestLabelLogin').style.display = 'none';
+                  document.getElementById('oportLabelLogin').style.display = 'none';
                   habilitarSugestao(true);
                 }
                 else{
@@ -1762,6 +2111,7 @@ function enviarArray(funcaoQueRecebeDeVolta) {//alert(funcaoQueRecebeDeVolta)
                   [...document.getElementsByClassName("g_id_signin")].forEach(e => e.style.display = "block");
                   document.getElementById('cadastroLabelLogin').style.display = 'block';
                   document.getElementById('sugestLabelLogin').style.display = 'block';
+                  document.getElementById('oportLabelLogin').style.display = 'block';
                   document.getElementById('residentForm').style.display = 'none';
                   habilitarSugestao(false);
                 }
