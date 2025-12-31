@@ -527,8 +527,8 @@
         <ul>
           <li><a href="#quem-somos" class="active">Quem somos</a></li>
           <li><a href="#docs">Documentos internos</a></li>
-          <li><a href="#ideias">Sugestões e demandas</a></li>
           <li><a href="#duvidas">Dúvidas do regimento</a></li>
+          <li><a href="#ideias">Sugestões e demandas</a></li>
           <li><a href="#oportunidades">Oportunidades</a></li>
           <li><a href="#grupos">Grupos e comunidades</a></li>
           <li><a href="#noticias">Notícias</a></li>
@@ -614,74 +614,7 @@
 	</script>
   </section>
 
-
-      <section id="ideias">
-        <!-- <h2>Situação das demandas</h2><br><table id="tabelaTarefas"></table> -->
-		    <!-- <iframe style="width: 100%; height: 80vh; border: none; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTNqLiDsCoVCHW6TAR0XCg66MTbOrLJJ_mq69xFJ3Ovg9yZsqjnIlQHOnjbUXuVCgsydCGjHrfRdIV-/pubhtml?gid=0&amp;range=A1:D&amp;widget=false&amp;headers=false&amp;chrome=false"></iframe><br><br><br> -->
-		<div id="tarefas"></div>
-    <h2>Novas sugestões e demandas</h2>
-		<h4  id="sugestLabelLogin" style="color: gray;margin: 10px;">Faça login com seu e-mail para manifestação.</h4>
-    <div style="display:none;" id="botaoLogin2" class="g_id_signin"
-         data-type="standard"
-         data-size="small"
-         data-theme="outline"
-         data-text="signin"
-         data-shape="rectangular"
-         data-logo_alignment="center">
-    </div>
-        <form id="sugestao">
-          <!-- <input type="text" name="nome" placeholder="Seu Nome"> -->
-          <!-- <input type="text" name="ap" value="" size="1" placeholder="AP" > -->
-          <!-- <input type="text" name="torre" value="" size="1" placeholder="Torre" > -->
-		  
-          <textarea textarea id="sugerir" style="width: 100%;" name="mensagem"  placeholder="Mensagem ..." rows="5" ></textarea>
-
-          <!-- <div style="display:flex; align-items:center; width:100%; gap:8px;"> -->
-          <div  id="asIdeia">
-            <input type="email" id="mailideia" name="email" readonly  style="flex:1; background:#f0f0f0; color:#666; pointer-events:none;" disabled>
-            <input type="number" id="torreideia"  min="1" max="4" step="1" name="email" style="width:60px;" placeholder="Torre" >
-            <input type="number" id="apideia"  min="101" max="1010" step="1" name="email"  style="width:80px;" placeholder="AP" >
-          </div>
-          <!-- </div> -->
-        </form>
-            <button id="sugestaobutton" style="white-space:nowrap;" onclick="sugerir()">Enviar</button>
-
-        <script>
-
-          function sugerir(){
-            // console.log("Indo: ");
-            let sugerir = document.getElementById("sugerir");
-            let mail = document.getElementById("mailideia");
-            let ap = document.getElementById("apideia");
-            let torre = document.getElementById("torreideia");
-                //  console.log("Indo sugerir: " + sugerir.value + mail.value);  
-
-            if(sugerir.value == ""){
-              notificacao('aviso',['Por favor,','preencha a sugestão antes de enviar.',4]);
-              return;
-            } 
-
-            notificacao('animacao',['https://cdn.pixabay.com/animation/2023/08/15/07/22/07-22-02-443_512.gif',250,15]);
-
-            enviarArray( function(retornoSugerido){      
-                notificacao('aviso',['Relatório de envio',retornoSugerido,4]);
-
-                // console.log("Retorno Sugerir: " + retornoSugerido);  
-              } ).sugerido(torre.value,ap.value,mail.value,sugerir.value); 
-            sugerir.value = "";
-          }
-
-          function habilitarSugestao(estado){
-            // document.querySelectorAll("#sugestao input").forEach(e => e.disabled = !estado);
-            
-            document.getElementById("asIdeia").style.display = (estado)?'block':'none';
-            document.getElementById("sugestaobutton").style.display = (estado)?'block':'none';
-          }
-        </script>
-
-      </section>
-
-      <section id="duvidas">
+        <section id="duvidas">
         <h2>Pergunte à Telm.I.A.: <img src="https://i.ibb.co/4Zv8x8x7/TELM-I-A-cone.png" alt="TELM.I.A." height="65" style="vertical-align: middle;"></h2>
         <div id="textoRegimentoContainer" style="display:none;"></div>
 
@@ -753,7 +686,7 @@
             msgBox.innerHTML += `<div class="msg-wrapper" style="justify-content: flex-end;"><div class="msg msg-user">${query}</div></div>`;
             input.value = "";
             msgBox.scrollTop = msgBox.scrollHeight;
-            status.innerText = "...";
+            status.innerText = "Carregando ...";
 
             const regimento = regContainer ? regContainer.innerText : "";
             const model = "gemini-2.5-flash-preview-09-2025";
@@ -862,6 +795,74 @@
           </li>
         </form> -->
       </section>
+
+      <section id="ideias">
+        <!-- <h2>Situação das demandas</h2><br><table id="tabelaTarefas"></table> -->
+		    <!-- <iframe style="width: 100%; height: 80vh; border: none; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTNqLiDsCoVCHW6TAR0XCg66MTbOrLJJ_mq69xFJ3Ovg9yZsqjnIlQHOnjbUXuVCgsydCGjHrfRdIV-/pubhtml?gid=0&amp;range=A1:D&amp;widget=false&amp;headers=false&amp;chrome=false"></iframe><br><br><br> -->
+		<div id="tarefas"></div>
+    <h2>Novas sugestões e demandas</h2>
+		<h4  id="sugestLabelLogin" style="color: gray;margin: 10px;">Faça login com seu e-mail para manifestação.</h4>
+    <div style="display:none;" id="botaoLogin2" class="g_id_signin"
+         data-type="standard"
+         data-size="small"
+         data-theme="outline"
+         data-text="signin"
+         data-shape="rectangular"
+         data-logo_alignment="center">
+    </div>
+        <form id="sugestao">
+          <!-- <input type="text" name="nome" placeholder="Seu Nome"> -->
+          <!-- <input type="text" name="ap" value="" size="1" placeholder="AP" > -->
+          <!-- <input type="text" name="torre" value="" size="1" placeholder="Torre" > -->
+		  
+          <textarea textarea id="sugerir" style="width: 100%;" name="mensagem"  placeholder="Mensagem ..." rows="5" ></textarea>
+
+          <!-- <div style="display:flex; align-items:center; width:100%; gap:8px;"> -->
+          <div  id="asIdeia">
+            <input type="email" id="mailideia" name="email" readonly  style="flex:1; background:#f0f0f0; color:#666; pointer-events:none;" disabled>
+            <input type="number" id="torreideia"  min="1" max="4" step="1" name="email" style="width:60px;" placeholder="Torre" >
+            <input type="number" id="apideia"  min="101" max="1010" step="1" name="email"  style="width:80px;" placeholder="AP" >
+          </div>
+          <!-- </div> -->
+        </form>
+            <button id="sugestaobutton" style="white-space:nowrap;" onclick="sugerir()">Enviar</button>
+
+        <script>
+
+          function sugerir(){
+            // console.log("Indo: ");
+            let sugerir = document.getElementById("sugerir");
+            let mail = document.getElementById("mailideia");
+            let ap = document.getElementById("apideia");
+            let torre = document.getElementById("torreideia");
+                //  console.log("Indo sugerir: " + sugerir.value + mail.value);  
+
+            if(sugerir.value == ""){
+              notificacao('aviso',['Por favor,','preencha a sugestão antes de enviar.',4]);
+              return;
+            } 
+
+            notificacao('animacao',['https://cdn.pixabay.com/animation/2023/08/15/07/22/07-22-02-443_512.gif',250,15]);
+
+            enviarArray( function(retornoSugerido){      
+                notificacao('aviso',['Relatório de envio',retornoSugerido,4]);
+
+                // console.log("Retorno Sugerir: " + retornoSugerido);  
+              } ).sugerido(torre.value,ap.value,mail.value,sugerir.value); 
+            sugerir.value = "";
+          }
+
+          function habilitarSugestao(estado){
+            // document.querySelectorAll("#sugestao input").forEach(e => e.disabled = !estado);
+            
+            document.getElementById("asIdeia").style.display = (estado)?'block':'none';
+            document.getElementById("sugestaobutton").style.display = (estado)?'block':'none';
+          }
+        </script>
+
+      </section>
+
+
       <section id="cadastro">
 
 <div style="display:none;" id="boas_vindas" ></div>
@@ -1442,7 +1443,7 @@ function getFormData() {
 
   // verificarLogin();
 
-  const MEU_CLIENT_ID = '90142364675-oeo4houafkfl9sj6fcbqt71injv8v3jj.apps.googleusercontent.com';
+  const MEU_CLIENT_ID = '1056228394300-jcihq19qnj9jubd79tjg55guikej4npa.apps.googleusercontent.com';
   // 1. Inicializa o cliente do Google com suas configurações
   google.accounts.id.initialize({
     client_id: MEU_CLIENT_ID,
@@ -1586,7 +1587,9 @@ atualizar();
   
   
   //////////////////////////// DOCUMENTOS ////////////////////////////
-  ini.documents.forEach(d=>{
+  const docs = ini.documents.sort((a, b) => a.name.localeCompare(b.name, 'pt-BR', { numeric: true, sensitivity: 'base' }));
+
+  docs.forEach(d=>{
     const link = `<a href="${d.url}" class="pdf-link">${d.name.replace(".pdf","")}</a>`;
 
     if (/^\d{2}\/\d{2}\/\d{4}/.test(d.name)) {
