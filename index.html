@@ -494,6 +494,54 @@
         padding: 7px 4px;
     }
     #tabelaVenda th,td{padding: 7px 4px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* Container das fotos - Transforma em carrossel lateral */
+.fotos {
+  display: flex;
+  overflow-x: auto; /* Habilita rolagem lateral */
+  gap: 15px;
+  padding: 15px 5px;
+  scroll-snap-type: x mandatory; /* Efeito de "trava" ao rolar */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Estilo das imagens dentro do carrossel */
+.fotos img {
+  flex: 0 0 auto; /* Impede que a imagem esmague */
+  height: 250px;  /* Altura fixa para alinhar todas */
+  width: auto;    /* Largura proporcional ao arquivo original */
+  max-width: 85vw; /* Não deixa a imagem ser maior que a tela */
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  scroll-snap-align: center; /* Centraliza a imagem no foco da rolagem */
+  object-fit: cover; /* Garante preenchimento elegante */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Estilização da barra de rolagem (opcional, para ficar discreta) */
+.fotos::-webkit-scrollbar { height: 6px; }
+.fotos::-webkit-scrollbar-thumb { background: #0077cc; border-radius: 10px; }
+.fotos::-webkit-scrollbar-track { background: #f1f1f1; }
     </style>
   </head>
   <body>
@@ -1541,7 +1589,8 @@ atualizar();
       let iniciacao = '<h2>Nós somos ...</h2><div id="apresentacao" style="white-space: pre-line;">'+ini.Informações[9][2]+'</div><hr><br>' + '<h2>Fotos</h2><div class="fotos">';
 
       ini.images.forEach(id=>{  // Alternativa a link da imagem no src: "https://lh3.googleusercontent.com/d/ID_DA_IMAGEM_DA_PASTA_DO_GOOGLE_DRIVE"
-        iniciacao += `<img class="galeria-imagem" style="height:200px"  src="https://lh3.googleusercontent.com/d/${id}"  alt="Foto">`;
+        // iniciacao += `<img class="galeria-imagem"   src="https://lh3.googleusercontent.com/d/${id}"  alt="Foto">`;
+        iniciacao += `<img class="galeria-imagem" src="https://lh3.googleusercontent.com/d/${id}" alt="Foto">`;
       });
 
       document.getElementById("inicio").innerHTML = iniciacao + '</div>';
