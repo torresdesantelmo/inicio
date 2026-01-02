@@ -505,43 +505,77 @@
 
 
 
+   
+      /*<!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Carrossel de fotos <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->*/
 
 
 
 
+            /* Container das fotos - Transforma em carrossel lateral */
+        .fotos {
+          display: flex;
+          overflow-x: auto; /* Habilita rolagem lateral */
+          gap: 15px;
+          padding: 15px 5px;
+          scroll-snap-type: x mandatory; /* Efeito de "trava" ao rolar */
+          -webkit-overflow-scrolling: touch;
+        }
+
+        /* Estilo das imagens dentro do carrossel */
+        .fotos img {
+          flex: 0 0 auto; /* Impede que a imagem esmague */
+          height: 250px;  /* Altura fixa para alinhar todas */
+          width: auto;    /* Largura proporcional ao arquivo original */
+          max-width: 85vw; /* Não deixa a imagem ser maior que a tela */
+          border-radius: 12px;
+          cursor: pointer;
+          transition: transform 0.2s;
+          scroll-snap-align: center; /* Centraliza a imagem no foco da rolagem */
+          object-fit: cover; /* Garante preenchimento elegante */
+          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Estilização da barra de rolagem (opcional, para ficar discreta) */
+        .fotos::-webkit-scrollbar { height: 6px; }
+        .fotos::-webkit-scrollbar-thumb { background: #0077cc; border-radius: 10px; }
+        .fotos::-webkit-scrollbar-track { background: #f1f1f1; }
 
 
+        /* Container para posicionar as setas em relação à galeria */
+        .carousel-wrapper {
+          position: relative;
+          display: flex;
+          align-items: center;
+        }
 
+        /* Estilo geral das setas */
+        .scroll-btn {
+          position: absolute;
+          z-index: 5;
+          background: rgba(0, 119, 204, 0.7);
+          color: white;
+          border: none;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          cursor: pointer;
+          font-size: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.3s;
+        }
 
+        .scroll-btn:hover { background: #005fa3; }
 
-    /* Container das fotos - Transforma em carrossel lateral */
-.fotos {
-  display: flex;
-  overflow-x: auto; /* Habilita rolagem lateral */
-  gap: 15px;
-  padding: 15px 5px;
-  scroll-snap-type: x mandatory; /* Efeito de "trava" ao rolar */
-  -webkit-overflow-scrolling: touch;
-}
+        /* Posicionamento individual */
+        .btn-left { left: 5px; }
+        .btn-right { right: 5px; }
 
-/* Estilo das imagens dentro do carrossel */
-.fotos img {
-  flex: 0 0 auto; /* Impede que a imagem esmague */
-  height: 250px;  /* Altura fixa para alinhar todas */
-  width: auto;    /* Largura proporcional ao arquivo original */
-  max-width: 85vw; /* Não deixa a imagem ser maior que a tela */
-  border-radius: 12px;
-  cursor: pointer;
-  transition: transform 0.2s;
-  scroll-snap-align: center; /* Centraliza a imagem no foco da rolagem */
-  object-fit: cover; /* Garante preenchimento elegante */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-/* Estilização da barra de rolagem (opcional, para ficar discreta) */
-.fotos::-webkit-scrollbar { height: 6px; }
-.fotos::-webkit-scrollbar-thumb { background: #0077cc; border-radius: 10px; }
-.fotos::-webkit-scrollbar-track { background: #f1f1f1; }
+        /* Esconde as setas em telas muito pequenas se desejar */
+        @media (max-width: 600px) { .scroll-btn { display: none; } }
     </style>
   </head>
   <body>
@@ -1586,14 +1620,22 @@ atualizar();
   enviarArray(      function(ini){  //console.log("retornoInicial: ", ini); 
 
   //////////////////////////// TELA INICIAL ////////////////////////////
-      let iniciacao = '<h2>Nós somos ...</h2><div id="apresentacao" style="white-space: pre-line;">'+ini.Informações[9][2]+'</div><hr><br>' + '<h2>Fotos</h2><div class="fotos">';
+    let iniciacao = '<h2>Nós somos ...</h2>' +
+  '<div id="apresentacao" style="white-space: pre-line;">' + ini.Informações[9][2] + '</div>' +
+  '<hr><br><h2>Fotos</h2>' +
+  '<div class="carousel-wrapper">' + // Início do Wrapper
+    '<button class="scroll-btn btn-left" onclick="scrollGaleria(-1)">❮</button>' +
+    '<div class="fotos" id="galeria-fotos">'; // Adicionei o ID galeria-fotos aqui
 
-      ini.images.forEach(id=>{  // Alternativa a link da imagem no src: "https://lh3.googleusercontent.com/d/ID_DA_IMAGEM_DA_PASTA_DO_GOOGLE_DRIVE"
-        // iniciacao += `<img class="galeria-imagem"   src="https://lh3.googleusercontent.com/d/${id}"  alt="Foto">`;
-        iniciacao += `<img class="galeria-imagem" src="https://lh3.googleusercontent.com/d/${id}" alt="Foto">`;
-      });
+  ini.images.forEach(id => {
+    iniciacao += `<img class="galeria-imagem" src="https://lh3.googleusercontent.com/d/${id}" alt="Foto">`;
+  });
 
-      document.getElementById("inicio").innerHTML = iniciacao + '</div>';
+  iniciacao += '</div>' + // Fecha .fotos
+      '<button class="scroll-btn btn-right" onclick="scrollGaleria(1)">❯</button>' +
+    '</div>'; // Fecha .carousel-wrapper
+
+  document.getElementById("inicio").innerHTML = iniciacao;
       
       document.getElementById("textoRegimentoContainer").innerText = ini.Informações[12][2];
 
@@ -2041,7 +2083,15 @@ renderizarDuvidas(dadosDuvidas);
 
 
 
-
+function scrollGaleria(direcao) {
+  const galeria = document.getElementById('galeria-fotos');
+  const scrollAmount = 300; // Quantidade de pixels que corre por clique
+  
+  galeria.scrollBy({
+    left: direcao * scrollAmount,
+    behavior: 'smooth'
+  });
+}
 
 
 
