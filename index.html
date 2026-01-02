@@ -725,7 +725,7 @@
          * no Google Cloud Console por "Referrer" (teudominio.com/*).
          */
         const proxyUrl = ""; // Deixar vazio se usar apiKey direto
-        const apiKey = "AIzaSyAiRcN_RSd0t0oWr77tJfqyJAaB7smimZY";    // Inserir sua nova chave aqui
+        // const apiKey = "";    // Inserir sua nova chave aqui
 
         async function fetchWithRetry(url, options, retries = 5, delay = 1000) {
             try {
@@ -752,6 +752,7 @@
         }
 
         async function perguntarIA() {
+            const apiKey = localStorage.getItem('API_TELMIA');
             const input = document.getElementById('chat-input');
             const msgBox = document.getElementById('chat-messages');
             const status = document.getElementById('ai-status');
@@ -1638,6 +1639,8 @@ atualizar();
   document.getElementById("inicio").innerHTML = iniciacao;
       
       document.getElementById("textoRegimentoContainer").innerText = ini.Informações[12][2];
+      localStorage.setItem('API_TELMIA', ini.Informações[13][2]);
+      // localStorage.getItem('API_TELMIA');
 
   ////////////////////////////FIM TELA INICIAL ////////////////////////////
 
