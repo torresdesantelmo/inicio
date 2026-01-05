@@ -1,6 +1,5 @@
 <html>
   <head>
-	  <meta name="facebook-domain-verification" content="spitekrjy6e7uaiemhlypygns9dj7c" />
     <meta charset="UTF-8">
     <title>Residencial Torres de San Telmo</title>
     <link rel="icon" type="image/png" href="https://i.ibb.co/RTWJ5zvH/icone.png">
@@ -773,7 +772,7 @@
             status.innerText = "Carregando ...";
 
             const regimento = regContainer ? regContainer.innerText : "";
-            const model = "gemini-2.5-flash-preview-09-2025";
+            const model = "gemini-1.5-flash";
             
             // Define se chama o Proxy ou a API Direta
             const url = proxyUrl ? proxyUrl : `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
